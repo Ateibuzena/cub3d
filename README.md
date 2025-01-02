@@ -1,4 +1,3 @@
-```markdown
 # cub3d
 Mi primer RayCaster con miniLibX
 
@@ -62,12 +61,12 @@ Con la ayuda de los numerosos documentos disponibles en internet, utilizarás la
 
 **Ejemplo de un mapa válido:**  
 ```
-111111  
-100101  
-101001  
-1100N1  
-111111  
-```
+111111
+100101
+101001
+1100N1
+111111
+´´´
 
 - **Reglas adicionales para el mapa:**  
   - El mapa debe estar cerrado/rodeado por paredes; si no es así, el programa debe devolver un error.  
@@ -110,28 +109,28 @@ Con la ayuda de los numerosos documentos disponibles en internet, utilizarás la
 
 - **Ejemplo de la parte obligatoria con una escena minimalista en formato `.cub`:**  
 ```
-NO ./path_to_the_north_texture  
-SO ./path_to_the_south_texture  
-WE ./path_to_the_west_texture  
-EA ./path_to_the_east_texture  
-F 220,100,0  
-C 225,30,0  
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
+F 220,100,0
+C 225,30,0
 
-1111111111111111111111111  
-1000000000110000000000001  
-1011000001110000000000001  
-1001000000000000000000001  
-111111111011000001110000000000001  
-100000000011000001110111111111111  
-11110111111111011100000010001  
-11110111111111011101010010001  
-11000000110101011100000010001  
-10000000000000001100000010001  
-10000000000000001101010010001  
-11000001110101011111011110N0111  
-11110111 1110101 101111010001  
-11111111 1111111 111111111111  
-```
+1111111111111111111111111
+1000000000110000000000001
+1011000001110000000000001
+1001000000000000000000001
+111111111011000001110000000000001
+100000000011000001110111111111111
+11110111111111011100000010001
+11110111111111011101010010001
+11000000110101011100000010001
+10000000000000001100000010001
+10000000000000001101010010001
+11000001110101011111011110N0111
+11110111 1110101 101111010001
+11111111 1111111 111111111111
+´´´
 
 - **Si se encuentra cualquier tipo de error de configuración en el archivo, el programa debe cerrarse correctamente y devolver:**  
   `"Error\n"` seguido de un mensaje de error explícito de tu elección.
