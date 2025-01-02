@@ -1,5 +1,6 @@
+```markdown
 # cub3d
-My first RayCaster with miniLibX
+Mi primer RayCaster con miniLibX
 
 **Capítulo II**  
 **Objetivos**  
@@ -133,8 +134,7 @@ C 225,30,0
 ```
 
 - **Si se encuentra cualquier tipo de error de configuración en el archivo, el programa debe cerrarse correctamente y devolver:**  
-  `"Error\n"` seguido de un mensaje de error explícito de tu elección.  
-
+  `"Error\n"` seguido de un mensaje de error explícito de tu elección.
 
 **Capítulo V**  
 **Parte de Bonificación**  
