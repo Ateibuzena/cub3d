@@ -59,7 +59,7 @@ clean:
 	rm -rf $(OBJ_DIR)/*.o
        @printf "$(GREEN)[Cleaned] Object files removed successfully!\n$(RESET)"
 
-fclean: cleanç
+fclean: clean
        @printf "$(RED)[Cleaning] Removing $(NAME), $(LIBFT) & $(MLX42)\n$(RESET)"
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(MLX42_DIR) fclean
