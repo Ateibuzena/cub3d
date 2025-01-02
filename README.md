@@ -60,13 +60,13 @@ Con la ayuda de los numerosos documentos disponibles en internet, utilizarás la
     - `N`, `S`, `E` o `W` para la posición inicial del jugador y la orientación al iniciar.  
 
 ### **Ejemplo de un mapa válido:**  
-```
+``` bash
 111111
 100101
 101001
 1100N1
 111111
-´´´
+```
 
 ### **Reglas adicionales para el mapa:**  
 - 🔒 El mapa debe estar cerrado/rodeado por paredes; si no es así, el programa debe devolver un error.  
@@ -121,4 +121,4 @@ C 225,30,0
 1011000001110000000000001
 1001000000000000000000001
 111111111011000001110000000000001
-´´´
+```
