@@ -34,7 +34,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX42) $(OBJS)
 	@printf "$(CYAN)[Building Main] Compiling $(NAME)...\n$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) -v $(INCLUDES) -ldl -lglfw -pthread -lm -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -v $(LIBFT) $(MLX42) -ldl -lglfw -pthread -lm -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
