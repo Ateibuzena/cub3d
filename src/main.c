@@ -1,4 +1,4 @@
-#include "../cub3dft.h"
+#include "../include/cub3dft.h"
 
 int	main(int argc, char **argv)
 {
