@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -IMLX42/include -g
-LDFLAGS = -LMLX42/build -lmlx42 -ldl -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+LDFLAGS = -LMLX42/build -lmlx42 -lglfw -lm -ldl -pthread
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -14,11 +14,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) MLX42/build/libmlx42.a
-	@echo $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 MLX42/build/libmlx42.a:
-	cmake -S MLX42 -B MLX42/build
-	cmake --build MLX42/build -j4
+	cmake -S MLX42 -B MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
+	cmake --build MLX42/build --parallel
 
 clean:
 	rm -rf $(OBJ_DIR)

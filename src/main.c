@@ -1,15 +1,14 @@
 #include "../include/cub3dft.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	mlx_t	*mlx;
+	t_game	game;
 
-	(void)argv;
-	if (argc != 2)
-		return (printf("./cub3D <map_path>\n"));
-	/*if (!ft_chek_args(argc, argv))
-		return (printf("Error: Incorrecte arguments\n"));*/
-	mlx = mlx_init(3840, 2160, "cub3D", true);
-	(void)mlx;
+	ft_init_window(&game);
+	ft_render_background(&game);
+    //ft_raycast(&game);
+
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	return (0);
 }
