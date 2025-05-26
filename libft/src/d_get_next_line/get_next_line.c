@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 21:47:26 by azubieta          #+#    #+#             */
-/*   Updated: 2024/11/22 21:30:48 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:09:10 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,87 +90,26 @@ char	*ft_read_fd(int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer = NULL;
 	char		*line;
-	char		*temp;
+	char		*new_buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (buffer == NULL)
-	{
-		buffer = malloc(1 * sizeof(char));
-		if (!buffer)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[0] = '\0';
-	}
+	if (!buffer)
+		buffer = ft_strdup("");
 	buffer = ft_read_fd(fd, buffer);
-	temp = buffer;
+	if (!buffer)
+		return (NULL);
 	line = ft_line(buffer);
-	buffer = ft_buffer_update(buffer);
-	free(temp);
+	if (!line)
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
+	new_buffer = ft_buffer_update(buffer);
+	free(buffer);
+	buffer = ft_free_staticbuffer(new_buffer);
 	return (line);
 }
-
-/*valgrind --leak-check=full \           
-         --show-leak-kinds=all \
-         --track-origins=yes \
-         --log-file=valgrind-out.txt \
-         ./a.out --*/
-/*
-#include <time.h>
-
-int main(int argc, char *argv[])
-{
-    int     fd;
-    char    *line;
-    int     num_lines = 1;
-	clock_t	start, end;
-    double	cpu_time_used;
-
-	start = clock();
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1)
-    {
-        printf("%d\n", fd);
-        write(1, "Error File\n", 11);
-		return (0);
-    }
-    while (num_lines)
-    {
-        line = get_next_line(fd);
-        printf("Linea_%d: %s\n", 2 - num_lines, line);
-		free(line);
-        num_lines--;
-    }
-	close(fd);
-	end = clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tiempo de ejecución: %f segundos\n", cpu_time_used);
-    return (0);
-}*/
-/*
-#include <time.h>
-
-int main(void)
-{
-	char	*line;
-	int		fd;
-	clock_t	start, end;
-    double	cpu_time_used;
-
-	start = clock();
-	fd = open("./data/texto_1.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	end = clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tiempo de ejecución: %f segundos\n", cpu_time_used);
-    return (0);
-}*/

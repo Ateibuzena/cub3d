@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 23:14:23 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 19:02:09 by azubieta         ###   ########.fr       */
+/*   Created: 2025/01/10 17:09:20 by azubieta          #+#    #+#             */
+/*   Updated: 2025/04/13 14:30:21 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "../../libft.h"
 
-char	*ft_strncpy(char *dest, const char *src, size_t n)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	size_t	i;
+	char	*ptr;
+	size_t	len;
 
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	if (!s1)
+		return (NULL);
+	len = ft_strlen(s1);
+	if (len > n)
+		len = n;
+	ptr = malloc((len + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	ft_memcpy(ptr, s1, len);
+	ptr[len] = '\0';
+	return (ptr);
 }

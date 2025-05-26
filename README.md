@@ -1,124 +1,80 @@
-# 🕹️ **cub3d**  
-Mi primer RayCaster con miniLibX
+# cub3D
 
-## 🎯 **Capítulo II**  
-### **Objetivos**  
-Los objetivos de este proyecto son similares a los de todos los proyectos del primer año: rigor, uso de C, aplicación de algoritmos básicos, investigación de información, etc.  
+> A 42 School project — Raycasting engine based on Wolfenstein 3D.
 
-Como proyecto de diseño gráfico, **cub3D** te permitirá mejorar tus habilidades en las siguientes áreas: manejo de ventanas, colores, eventos, formas rellenas, etc.  
+## 🎯 Goal
 
-En conclusión, **cub3D** es un campo de juego notable para explorar las aplicaciones prácticas y lúdicas de las matemáticas sin necesidad de entender todos sus detalles específicos.  
+The goal of this project is to build a simple 3D game using raycasting in C and the MiniLibX graphics library. It renders a first-person view of a 2D map, handles player movement, and displays textured walls in a pseudo-3D perspective.
 
-Con la ayuda de los numerosos documentos disponibles en internet, utilizarás las matemáticas como herramienta para crear algoritmos elegantes y eficientes.
+## 📷 Screenshot
 
-## 📜 **Capítulo III**  
-### **Instrucciones Comunes**  
+*(You can add a screenshot here later when the engine works!)*
 
-- ✅ Tu proyecto debe estar escrito en **C**.  
-- 📏 Debe cumplir con la **Norma**. Si tienes archivos o funciones de bonificación, también serán verificados según la norma, y recibirás un 0 si se encuentra algún error en ella.  
-- ⚠️ Tus funciones no deben terminar inesperadamente (fallo de segmentación, error de bus, doble liberación de memoria, etc.), excepto en casos de comportamientos indefinidos. Si esto ocurre, tu proyecto será considerado no funcional y recibirá un 0 durante la evaluación.  
-- 🧠 Toda la memoria asignada en el heap debe ser liberada correctamente cuando sea necesario. No se tolerarán fugas de memoria.  
-- 🛠️ Si el enunciado lo requiere, debes entregar un **Makefile** que compile tus archivos fuente al resultado solicitado, utilizando las banderas `-Wall`, `-Wextra` y `-Werror`, con el compilador `cc`. Además, tu **Makefile** no debe realizar relinks.  
-- 🗂️ Tu **Makefile** debe contener al menos las reglas: `$(NAME)`, `all`, `clean`, `fclean` y `re`.  
-- 🎁 Para incluir bonificaciones en tu proyecto, debes agregar una regla **bonus** a tu **Makefile**, que incluirá todos los encabezados, librerías o funciones adicionales que están prohibidas en la parte principal del proyecto. Las bonificaciones deben estar en un archivo separado con el sufijo `_bonus.{c/h}` si no se especifica lo contrario en el enunciado. La evaluación de la parte obligatoria y de bonificación se realiza por separado.  
-- 🖥️ Si tu proyecto permite el uso de tu **libft**, debes copiar sus fuentes y su **Makefile** asociado en una carpeta llamada **libft**. El **Makefile** de tu proyecto debe compilar la librería utilizando su propio **Makefile**, y luego compilar el proyecto.  
-- 🔧 Se te anima a crear programas de prueba para tu proyecto, aunque este trabajo no será entregado ni evaluado. Estos programas te permitirán probar fácilmente tu trabajo y el de tus compañeros. Encontrarás estas pruebas especialmente útiles durante tu defensa, donde puedes usarlas junto con las de tus compañeros a los que estés evaluando.  
-- 🏠 Entrega tu trabajo en el repositorio **git** asignado. Solo se evaluará el trabajo que se encuentre en el repositorio después de las evaluaciones por parte de tus compañeros, si ocurre un error en cualquier sección de tu trabajo durante la calificación de Deepthought, la evaluación se detendrá.
+## 🧱 Features
 
-## 📝 **Capítulo IV**  
-### **Parte Obligatoria - cub3D**  
+- Raycasting algorithm for wall rendering
+- Texture loading and mapping (XPM files)
+- Player movement and rotation
+- Map parsing from `.cub` file
+- Floor and ceiling coloring
+- Error handling and validations
+- MiniLibX integration
 
-- **Nombre del programa:** cub3D  
-- **Archivos a entregar:** Todos tus archivos.  
-- **Makefile:** Debe incluir las reglas `all`, `clean`, `fclean`, `re`, `bonus`.  
-- **Argumentos:** Un mapa en formato `*.cub`.  
-- **Funciones externas permitidas:**  
-  - `open`, `close`, `read`, `write`, `printf`, `malloc`, `free`, `perror`, `strerror`, `exit`, `gettimeofday`.  
-  - Todas las funciones de la librería matemática (`-lm`, `man 3 math`).  
-  - Todas las funciones de la MiniLibX.  
-- **Libft autorizada:** Sí.  
-- **Descripción:**  
-  Debes crear una representación gráfica en 3D "realista" del interior de un laberinto desde una perspectiva en primera persona. Esta representación debe realizarse utilizando los principios de **Ray-Casting** mencionados anteriormente.  
+## 🗺️ Map format (`.cub`)
 
-### **Restricciones:**  
-- 🖼️ Debes usar la **miniLibX**. Puedes optar por usar la versión disponible en el sistema operativo o compilarla desde sus fuentes. Si eliges trabajar con las fuentes, debes aplicar las mismas reglas para tu libft que las mencionadas en la sección de Instrucciones Comunes.  
-- 🖥️ La gestión de la ventana debe ser fluida: cambiar a otra ventana, minimizar, etc., debe funcionar correctamente.  
-- 🧱 Muestra diferentes texturas de paredes (puedes elegirlas) que varíen dependiendo de la orientación de la pared (Norte, Sur, Este, Oeste).
+Each map file must contain:
+- Paths to four wall textures: `NO`, `SO`, `WE`, `EA`
+- RGB colors for the floor (`F`) and ceiling (`C`)
+- A valid 2D map using `1` for walls, `0` for empty space
+- A single player start position with direction: `N`, `S`, `E`, or `W`
 
-- **Tu programa debe ser capaz de configurar colores diferentes para el suelo y el techo.**  
-- **El programa muestra la imagen en una ventana y debe respetar las siguientes reglas:**  
-  - 🏹 Las teclas de flecha izquierda y derecha del teclado deben permitir mirar hacia la izquierda y la derecha en el laberinto.  
-  - 🏃 Las teclas **W**, **A**, **S** y **D** deben permitir mover el punto de vista a través del laberinto.  
-  - 🚪 Presionar **ESC** debe cerrar la ventana y salir del programa limpiamente.  
-  - ❌ Hacer clic en la cruz roja del marco de la ventana debe cerrar la ventana y salir del programa limpiamente.  
-  - 🖼️ Se recomienda encarecidamente el uso de imágenes de la **MiniLibX**.  
+Example:
+```
+  NO ./textures/wall_north.xpm
+  SO ./textures/wall_south.xpm
+  WE ./textures/wall_west.xpm
+  EA ./textures/wall_east.xpm
+  F 220,100,0
+  C 225,30,0
 
-- 📝 **Tu programa debe tomar como primer argumento un archivo de descripción de escena con la extensión `.cub`.**  
-  - El mapa debe estar compuesto por solo 6 caracteres posibles:  
-    - `0` para un espacio vacío.  
-    - `1` para una pared.  
-    - `N`, `S`, `E` o `W` para la posición inicial del jugador y la orientación al iniciar.  
-
-### **Ejemplo de un mapa válido:**  
-``` bash
-111111
-100101
-101001
-1100N1
-111111
+  111111
+  100001
+  1000N1
+  111111
 ```
 
-### **Reglas adicionales para el mapa:**  
-- 🔒 El mapa debe estar cerrado/rodeado por paredes; si no es así, el programa debe devolver un error.  
-- 📄 Excepto por el contenido del mapa, cada tipo de elemento puede estar separado por una o más líneas vacías.  
-- 📊 Excepto por el contenido del mapa, que siempre debe ser lo último, cada tipo de elemento puede aparecer en cualquier orden en el archivo.  
-- 🌐 Excepto por el mapa, cada tipo de información de un elemento puede estar separado por uno o más espacios.  
-- 🧭 El mapa debe ser interpretado tal como aparece en el archivo. Los espacios son una parte válida del mapa y debes gestionarlos adecuadamente. Tu programa debe ser capaz de interpretar cualquier tipo de mapa que respete estas reglas.
 
-### **Cada elemento (excepto el mapa) comienza con un identificador de tipo** (compuesto por uno o dos caracteres), seguido por toda la información específica de cada objeto en un orden estricto, como se detalla a continuación:  
+## 🛠️ Build Instructions
 
-- 🏞️ **Textura del norte:**  
-    `NO ./path_to_the_north_texture`  
-    - Identificador: `NO`  
-    - Ruta a la textura del norte  
+This project uses **MiniLibX**, so make sure you have it installed.
 
-- 🏞️ **Textura del sur:**  
-    `SO ./path_to_the_south_texture`  
-    - Identificador: `SO`  
-    - Ruta a la textura del sur  
-
-- 🏞️ **Textura del oeste:**  
-    `WE ./path_to_the_west_texture`  
-    - Identificador: `WE`  
-    - Ruta a la textura del oeste  
-
-- 🏞️ **Textura del este:**  
-    `EA ./path_to_the_east_texture`  
-    - Identificador: `EA`  
-    - Ruta a la textura del este  
-
-- 🏡 **Color del suelo:**  
-    `F 220,100,0`  
-    - Identificador: `F`  
-    - Colores **R, G, B** en el rango [0, 255]: `220, 100, 0`  
-
-- 🏠 **Color del techo:**  
-  `C 225,30,0`  
-  - Identificador: `C`  
-  - Colores **R, G, B** en el rango [0, 255]: `225, 30, 0`  
-
-### **Ejemplo de la parte obligatoria con una escena minimalista en formato `.cub`:**  
+```bash
+  git clone https://github.com/yourusername/cub3d.git
+  cd cub3d
+  make
 ```
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
-F 220,100,0
-C 225,30,0
-
-1111111111111111111111111
-1000000000110000000000001
-1011000001110000000000001
-1001000000000000000000001
-111111111011000001110000000000001
+To run the program:
 ```
+  ./cub3D maps/example.cub
+```
+
+## 🎮 Controls
+- W / S — Move forward / backward
+
+- A / D — Strafe left / right (if implemented)
+
+- ← / → — Rotate left / right
+
+- ESC — Quit the game
+
+## 🧑‍💻 Authors
+- Ana Zubieta (@ateibuzena)
+
+- Manuel Hoyuela (@mhoyuela)
+
+## 📚 Resources
+- MLX42 documentation (42)
+
+- Lodev Raycasting tutorial
+
+- Wolfenstein 3D

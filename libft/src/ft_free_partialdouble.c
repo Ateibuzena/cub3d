@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_free_partialdouble.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 23:14:23 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 19:02:09 by azubieta         ###   ########.fr       */
+/*   Created: 2025/04/30 12:27:08 by azubieta          #+#    #+#             */
+/*   Updated: 2025/05/14 20:24:50 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "../libft.h"
 
-char	*ft_strncpy(char *dest, const char *src, size_t n)
+void	ft_free_partialdouble(char **arr, int size)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < n && src[i] != '\0')
+	if (!arr)
+		return ;
+	while (i < size)
 	{
-		dest[i] = src[i];
+		if (arr[i])
+		{
+			free(arr[i]);
+			arr[i] = NULL;
+		}
 		i++;
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	free(arr);
+	arr = NULL;
 }

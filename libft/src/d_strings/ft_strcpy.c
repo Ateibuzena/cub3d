@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 23:14:23 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 19:02:09 by azubieta         ###   ########.fr       */
+/*   Created: 2025/01/11 13:32:40 by azubieta          #+#    #+#             */
+/*   Updated: 2025/03/31 18:58:11 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "../../libft.h"
 
-char	*ft_strncpy(char *dest, const char *src, size_t n)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	size_t	i;
+	t_size	i;
 
 	i = 0;
-	while (i < n && src[i] != '\0')
+	while (src[i] != '\0')
 	{
-		dest[i] = src[i];
+		dst[i] = src[i];
 		i++;
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	dst[i] = '\0';
+	return (dst);
 }
