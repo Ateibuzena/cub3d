@@ -47,6 +47,15 @@ typedef struct s_perspective
 	int floor_start;   // Límite de suelo (opcional si lo necesitas en Y)
 }	t_perspective;
 
+typedef enum e_direction
+{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+    DIRECTION_COUNT
+} t_direction;
+
 typedef struct s_ray
 {
 	double	angle;
@@ -102,6 +111,7 @@ typedef struct s_game
 /*game.c*/
 void			ft_init_game(t_game *game);
 void			ft_render_background(t_game *game);
+void 			ft_raycast(t_game *game);
 
 /*game_init.c*/
 void			ft_init_mlx(t_game *game);
@@ -110,18 +120,26 @@ void			ft_init_map(t_game *game);
 void			ft_fill_grid(t_game *game);
 void			ft_load_textures(t_game *game);
 
-/*mlx_render*/
+/*game_render.c*/
 int				ft_floor_x(int x, int y, t_perspective *perspective);
 int				ft_floor_y(int x, int y, t_perspective *perspective);
 void			ft_draw_ceiling(t_game *game);
 void			ft_draw_floor(t_game *game);
 
-/*raycasting.c*/
+/*game_texture.c*/
+int				ft_calculate_texture_x(t_ray *ray, mlx_texture_t *texture);
+void			ft_draw_column(t_game *game, int x, t_ray ray, mlx_texture_t *texture, int tex_x);
+
+/*game_directions.c*/
+const char		**ft_get_directions_names(void);
+t_direction		ft_get_wall_direction(double dx, double dy);
+mlx_texture_t	*ft_get_texture(t_game *game, t_direction dir);
+
+/*game_raycasting.c*/
 int				ft_is_wall(t_game *game, double x, double y);
-void			ft_raycast(t_game *game);
-void			ft_cast_single_ray(t_game *game, int x, double angle);
-char			*ft_get_wall_direction(double dx, double dy);
-mlx_texture_t	*ft_get_texture(t_game *game, char *wall_dir);
-void			ft_draw_vertical_strip(t_game *game, int x, t_ray ray, mlx_texture_t *texture, int tex_x);
+void 			ft_update_column(t_game *game, t_ray *ray);
+int 			ft_cast_ray_vertical(t_game *game, t_ray *ray);
+int 			ft_cast_ray_horizontal(t_game *game, t_ray *ray);
+void 			ft_cast_ray(t_game *game, int x, double angle);
 
 #endif

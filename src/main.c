@@ -4,8 +4,7 @@ int	main(void)
 {
 	t_game	game;
 
-	ft_init_window(&game);
-	ft_load_textures(&game);
+	ft_init_game(&game);
 	ft_render_background(&game);
     ft_raycast(&game);
 
