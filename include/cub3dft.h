@@ -14,8 +14,15 @@
 # define CEILING_COLOR 0x000000FF
 # define LINE_COLOR 0x0000FFFF
 # define LILA_NEON 0xFF00FFFF
+# define BLUE_NEON 0x0000FFFF
 
-typedef struct s_perspective_calc
+typedef struct s_pixel
+{
+	int x;
+	int y;
+}	t_pixel;
+
+typedef struct s_perspective_metrics
 {
 	double	dx;
 	double	dy;
@@ -23,17 +30,22 @@ typedef struct s_perspective_calc
 	double	spacing_normalized;
 	double	nearest_line;
 	double	threshold;
-}	t_perspective_calc;
+}	t_perspective_metrics;
 
-typedef struct s_perspective_params
+typedef struct s_render_pixel
 {
-	int	y;
-	int	x;
-	int	point_x;
-	int	point_y;
-	int	line_spacing;
-	int	color;
-}	t_perspective_params;
+	int x;
+	int y;
+	int color;
+}	t_render_pixel;
+
+typedef struct s_perspective
+{
+	int origin_x;      // Punto de fuga X
+	int origin_y;      // Punto de fuga Y
+	int spacing;       // Espaciado entre líneas
+	int floor_start;   // Límite de suelo (opcional si lo necesitas en Y)
+}	t_perspective;
 
 typedef struct s_ray
 {
@@ -87,12 +99,22 @@ typedef struct s_game
 # define FOV (60 * (M_PI / 180)) // en radianes
 # define STEP_SIZE 1.0
 
-/*mlx_init.c*/
-void	ft_init_window(t_game *game);
-void	ft_load_textures(t_game *game);
+/*game.c*/
+void			ft_init_game(t_game *game);
+void			ft_render_background(t_game *game);
+
+/*game_init.c*/
+void			ft_init_mlx(t_game *game);
+void			ft_init_player(t_game *game);
+void			ft_init_map(t_game *game);
+void			ft_fill_grid(t_game *game);
+void			ft_load_textures(t_game *game);
 
 /*mlx_render*/
-void	ft_render_background(t_game *game);
+int				ft_floor_x(int x, int y, t_perspective *perspective);
+int				ft_floor_y(int x, int y, t_perspective *perspective);
+void			ft_draw_ceiling(t_game *game);
+void			ft_draw_floor(t_game *game);
 
 /*raycasting.c*/
 int				ft_is_wall(t_game *game, double x, double y);

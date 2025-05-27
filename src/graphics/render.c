@@ -1,37 +1,35 @@
 #include "../../include/cub3dft.h"
 
-static int	ft_is_perspective_line_vertical(int x, int y,
-				int point_x, int point_y, int spacing)
+int	ft_floor_x(int x, int y, t_perspective *perspective)
 {
-	t_perspective_calc p;
+	t_perspective_metrics metrics;
 
-	p.dx = x - point_x;
-	p.dy = y - point_y;
-	if (p.dy == 0)
-		p.dy = 0.0001;
-	p.offset = p.dx / p.dy;
-	p.spacing_normalized = 1.0 / spacing;
-	p.nearest_line = round(p.offset / p.spacing_normalized) * p.spacing_normalized;
-	p.threshold = 0.01;
-	return (fabs(p.offset - p.nearest_line) < p.threshold);
+	metrics.dx = x - perspective->origin_x;
+	metrics.dy = y - perspective->origin_y;
+	if (metrics.dy == 0)
+		metrics.dy = 0.0001;
+	metrics.offset = metrics.dx / metrics.dy;
+	metrics.spacing_normalized = 1.0 / perspective->spacing;
+	metrics.nearest_line = round(metrics.offset / metrics.spacing_normalized) * metrics.spacing_normalized;
+	metrics.threshold = 0.01;
+	return (fabs(metrics.offset - metrics.nearest_line) < metrics.threshold);
 }
 
-static int	ft_is_perspective_line_horizontal(int x, int y,
-				int point_x, int point_y, int spacing, int floor_start)
+int	ft_floor_y(int x, int y, t_perspective *perspective)
 {
 	double	m;
-	double	b;
-	double	y_line_val;
+	double	y_intercept;
+	double	line_y;
 
-	if (((y - floor_start) % spacing) >= 2)
+	if (((y - perspective->floor_start) % perspective->spacing) >= 2)
 		return (0);
-	m = ((double)(y - point_y)) / (0 - point_x);
-	b = point_y - m * point_x;
-	y_line_val = m * x + b;
-	return (fabs(y - y_line_val) < 2);
+	m = ((double)(y - perspective->origin_y)) / (0 - perspective->origin_x);
+	y_intercept = perspective->origin_y - m * perspective->origin_x;
+	line_y = m * x + y_intercept;
+	return (fabs(y - line_y) < 2);
 }
 
-static void	ft_draw_ceiling(t_game *game)
+void	ft_draw_ceiling(t_game *game)
 {
 	int	y;
 	int	x;
@@ -49,34 +47,28 @@ static void	ft_draw_ceiling(t_game *game)
 	}
 }
 
-static void	ft_draw_floor_with_perspective(t_game *game)
+void	ft_draw_floor(t_game *game)
 {
-	t_perspective_params p;
+	t_perspective		perspective;
+	t_render_pixel		px;
 
-	p.y = HEIGHT / 2;
-	p.point_x = WIDTH / 2;
-	p.point_y = 0;
-	p.line_spacing = 48;
-	while (p.y < HEIGHT)
+	perspective.origin_x = WIDTH / 2;
+	perspective.origin_y = 0;
+	perspective.spacing = 48;
+	perspective.floor_start = HEIGHT / 2;
+
+	px.y = perspective.floor_start;
+	while (px.y < HEIGHT)
 	{
-		p.x = 0;
-		while (p.x < WIDTH)
+		px.x = 0;
+		while (px.x < WIDTH)
 		{
-			p.color = LINE_COLOR;
-			if (ft_is_perspective_line_vertical(p.x, p.y, p.point_x,
-					p.point_y, p.line_spacing)
-				|| ft_is_perspective_line_horizontal(p.x, p.y, p.point_x,
-					p.point_y, p.line_spacing, HEIGHT / 2))
-				p.color = FLOOR_COLOR;
-			mlx_put_pixel(game->img, p.x, p.y, p.color);
-			p.x++;
+			px.color = LINE_COLOR;
+			if (ft_floor_x(px.x, px.y, &perspective) || ft_floor_y(px.x, px.y, &perspective))
+				px.color = FLOOR_COLOR;
+			mlx_put_pixel(game->img, px.x, px.y, px.color);
+			px.x++;
 		}
-		p.y++;
+		px.y++;
 	}
-}
-
-void	ft_render_background(t_game *game)
-{
-	ft_draw_ceiling(game);
-	ft_draw_floor_with_perspective(game);
 }
