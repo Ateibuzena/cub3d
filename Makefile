@@ -1,6 +1,11 @@
 NAME = cub3D
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -IMLX42/include -g
+
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+CFLAGS = -Wall -Wextra -Werror -Iinclude -IMLX42/include -I$(LIBFT_DIR) -g
 LDFLAGS = -LMLX42/build -lmlx42 -lglfw -lm -ldl -pthread
 
 SRC_DIR = src
@@ -13,8 +18,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) MLX42/build/libmlx42.a
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+$(NAME): $(OBJS) $(LIBFT) MLX42/build/libmlx42.a
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) $(LIBFT)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 MLX42/build/libmlx42.a:
 	cmake -S MLX42 -B MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
@@ -22,9 +30,11 @@ MLX42/build/libmlx42.a:
 
 clean:
 	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

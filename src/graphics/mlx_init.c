@@ -33,7 +33,7 @@ void	ft_init_window(t_game *game)
 	game->player.dir = M_PI / 2; //(90º mirando hacia abajo)
 	game->map.width = MAP_WIDTH;
 	game->map.height = MAP_HEIGHT;
-
+	
 	game->map.grid = malloc(MAP_WIDTH * sizeof(int *));
 	if (!game->map.grid)
 	{
@@ -43,7 +43,7 @@ void	ft_init_window(t_game *game)
 		exit(EXIT_FAILURE);
 	}
 	int y;
-
+	
 	y = 0;
 	while (y < MAP_HEIGHT)
 	{
@@ -51,7 +51,7 @@ void	ft_init_window(t_game *game)
 		if (!game->map.grid[y])
 		{
 			while (y > 0)
-				free(game->map.grid[--y]);
+			free(game->map.grid[--y]);
 			free(game->map.grid);
 			mlx_close_window(game->mlx);
 			fprintf(stderr, "Error: Memory allocation failed for map row\n");
@@ -72,5 +72,20 @@ void	ft_init_window(t_game *game)
 			x++;
 		}
 		y++;
+	}
+}
+
+void	ft_load_textures(t_game *game)
+{
+	game->textures.north = mlx_load_png("textures/wall_north.png");
+	game->textures.south = mlx_load_png("textures/wall_south.png");
+	game->textures.east = mlx_load_png("textures/wall_east.png");
+	game->textures.west = mlx_load_png("textures/wall_west.png");
+
+	if (!game->textures.north || !game->textures.south
+		|| !game->textures.east || !game->textures.west)
+	{
+		fprintf(stderr, "Error: No se pudieron cargar una o más texturas.\n");
+		exit(EXIT_FAILURE);
 	}
 }

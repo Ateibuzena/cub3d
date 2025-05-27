@@ -3,22 +3,17 @@
 static int	ft_is_perspective_line_vertical(int x, int y,
 				int point_x, int point_y, int spacing)
 {
-	double	dx;
-	double	dy;
-	double	offset;
-	double	spacing_normalized;
-	double	nearest_line;
-	double	threshold;
+	t_perspective_calc p;
 
-	dx = x - point_x;
-	dy = y - point_y;
-	if (dy == 0)
-		dy = 0.0001;
-	offset = dx / dy;
-	spacing_normalized = 1.0 / spacing;
-	nearest_line = round(offset / spacing_normalized) * spacing_normalized;
-	threshold = 0.01;
-	return (fabs(offset - nearest_line) < threshold);
+	p.dx = x - point_x;
+	p.dy = y - point_y;
+	if (p.dy == 0)
+		p.dy = 0.0001;
+	p.offset = p.dx / p.dy;
+	p.spacing_normalized = 1.0 / spacing;
+	p.nearest_line = round(p.offset / p.spacing_normalized) * p.spacing_normalized;
+	p.threshold = 0.01;
+	return (fabs(p.offset - p.nearest_line) < p.threshold);
 }
 
 static int	ft_is_perspective_line_horizontal(int x, int y,
@@ -56,32 +51,27 @@ static void	ft_draw_ceiling(t_game *game)
 
 static void	ft_draw_floor_with_perspective(t_game *game)
 {
-	int	y;
-	int	x;
-	int	point_x;
-	int	point_y;
-	int	line_spacing;
-	int	color;
+	t_perspective_params p;
 
-	y = HEIGHT / 2;
-	point_x = WIDTH / 2;
-	point_y = 0;
-	line_spacing = 50;
-	while (y < HEIGHT)
+	p.y = HEIGHT / 2;
+	p.point_x = WIDTH / 2;
+	p.point_y = 0;
+	p.line_spacing = 48;
+	while (p.y < HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
+		p.x = 0;
+		while (p.x < WIDTH)
 		{
-			color = LINE_COLOR;
-			if (ft_is_perspective_line_vertical(x, y, point_x,
-					point_y, line_spacing)
-				|| ft_is_perspective_line_horizontal(x, y, point_x,
-					point_y, line_spacing, HEIGHT / 2))
-				color = FLOOR_COLOR;
-			mlx_put_pixel(game->img, x, y, color);
-			x++;
+			p.color = LINE_COLOR;
+			if (ft_is_perspective_line_vertical(p.x, p.y, p.point_x,
+					p.point_y, p.line_spacing)
+				|| ft_is_perspective_line_horizontal(p.x, p.y, p.point_x,
+					p.point_y, p.line_spacing, HEIGHT / 2))
+				p.color = FLOOR_COLOR;
+			mlx_put_pixel(game->img, p.x, p.y, p.color);
+			p.x++;
 		}
-		y++;
+		p.y++;
 	}
 }
 
