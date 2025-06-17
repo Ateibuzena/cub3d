@@ -12,9 +12,9 @@
 
 #include "../../libft.h"
 
-void	ft_lstiter(t_list_42 *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_list_42	*sublist;
+	t_list	*sublist;
 
 	sublist = lst;
 	while (sublist)

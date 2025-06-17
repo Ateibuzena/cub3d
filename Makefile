@@ -18,15 +18,17 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT) MLX42/build/libmlx42.a
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) $(LIBFT)
-
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 MLX42/build/libmlx42.a:
 	cmake -S MLX42 -B MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
 	cmake --build MLX42/build --parallel
+
+$(NAME): $(OBJS) $(LIBFT) MLX42/build/libmlx42.a
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) $(LIBFT)
+
+all: $(NAME)
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -37,5 +39,3 @@ fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
-
-all: $(NAME)

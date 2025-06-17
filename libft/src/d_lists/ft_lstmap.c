@@ -12,12 +12,12 @@
 
 #include "../../libft.h"
 
-t_list_42	*ft_lstmap(t_list_42 *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list_42	*nodo;
+	t_list	*nodo;
 	void		*temp;
-	t_list_42	*sublist;
-	t_list_42	*new_list;
+	t_list	*sublist;
+	t_list	*new_list;
 
 	sublist = lst;
 	new_list = 0;

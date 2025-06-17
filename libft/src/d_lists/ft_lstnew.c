@@ -12,11 +12,11 @@
 
 #include "../../libft.h"
 
-t_list_42	*ft_lstnew(void *ptr)
+t_list	*ft_lstnew(void *ptr)
 {
-	t_list_42	*nodo;
+	t_list	*nodo;
 
-	nodo = malloc(sizeof(t_list_42));
+	nodo = malloc(sizeof(t_list));
 	if (!nodo)
 		return (NULL);
 	nodo->content = ptr;

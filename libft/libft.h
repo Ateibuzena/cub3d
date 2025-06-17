@@ -46,14 +46,14 @@ typedef struct s_split
 # endif
 
 //Struct to libft_bonus
-# ifndef S_LIST_42
-#  define S_LIST_42
+# ifndef S_LIST
+#  define S_LIST
 
-typedef struct s_list_42
+typedef struct s_list
 {
 	void				*content;
-	struct s_list_42	*next;
-}	t_list_42;
+	struct s_list	*next;
+}	t_list;
 
 # endif
 
@@ -118,29 +118,23 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 
 /*SRC/D_GET_NEXT_LINE/*/
-char		*get_next_line_bonus(int fd);
-char		*ft_free_getnextline_bonus(char *ptr);
-size_t		ft_strlen_getnextline_bonus(const char *s);
-char		*ft_strjoin_getnextline_bonus(char *s1, char *s2);
-char		*ft_strchr_getnextline_bonus(const char *str, int c);
-t_fdnode	*ft_newnode_getnextline_bonus(int fd);
-char		*ft_freenode_getnextline_bonus(t_fdnode **list, int fd);
+
 char		*get_next_line(int fd);
+t_fdnode	*ft_newnode(int fd);
+char		*ft_freenode(t_fdnode **list, int fd);
 char		*ft_strjoin_getnextline(char *s1, char *s2);
-char		*ft_strchr_getnextline(const char *s, int c);
-size_t		ft_strlen_getnextline(const char *s);
 char		*ft_free(char *ptr);
 
 /*SRC/D_LISTS/*/
-t_list_42	*ft_lstnew(void *ptr);
-void		ft_lstadd_front(t_list_42 **lst, t_list_42 *new);
-int			ft_lstsize(t_list_42 *lst);
-t_list_42	*ft_lstlast(t_list_42 *lst);
-void		ft_lstadd_back(t_list_42 **lst, t_list_42 *new);
-void		ft_lstdelone(t_list_42 *lst, void (*del)(void *));
-void		ft_lstclear(t_list_42 **lst, void (*del)(void *));
-void		ft_lstiter(t_list_42 *lst, void (*f)(void *));
-t_list_42	*ft_lstmap(t_list_42 *lst, void *(*f)(void *), void (*del)(void *));
+t_list		*ft_lstnew(void *ptr);
+void		ft_lstadd_front(t_list **lst, t_list *new);
+int			ft_lstsize(t_list *lst);
+t_list		*ft_lstlast(t_list *lst);
+void		ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_lstdelone(t_list *lst, void (*del)(void *));
+void		ft_lstclear(t_list **lst, void (*del)(void *));
+void		ft_lstiter(t_list *lst, void (*f)(void *));
+t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /*SRC/D_MEMORY/*/
 void		*ft_memset(void *array, int value, t_size len);
@@ -203,6 +197,8 @@ void		ft_free_partialdouble(char **arr, int size);
 int			ft_strlen_double(char **str);
 long int	ft_strtol(const char *str, char **endptr, int base);
 void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+char		*ft_strclean(const char *str, char to_clean);
+char		**ft_clean_double(char **original, char to_clean);
 
 // End of LIBFT_H
 #endif

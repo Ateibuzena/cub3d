@@ -14,16 +14,17 @@
 
 char	*ft_strchr(const char *str, int c)
 {
-	t_size		i;
-	t_size		len;
-	char		*ptr;
+	size_t	i;
+	char	*ptr;
+	size_t	len;
 
-	i = 0;
-	c = c % 256;
+	if (!str || !(*str))
+		return (NULL);
 	len = ft_strlen(str);
+	i = 0;
 	while (i <= len)
 	{
-		if (str[i] == c)
+		if (str[i] && str[i] == (unsigned char)c)
 		{
 			ptr = (char *)str + i;
 			return (ptr);

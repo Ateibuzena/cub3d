@@ -12,9 +12,9 @@
 
 #include "../../libft.h"
 
-t_list_42	*ft_lstlast(t_list_42 *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_list_42	*sublist;
+	t_list	*sublist;
 
 	sublist = lst;
 	while (sublist)
