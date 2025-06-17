@@ -15,6 +15,7 @@ int	ft_map_start(char **lines)
 	}
 	return (-1);
 }
+
 void	ft_map_dimensions(char **lines, int start, t_data *data)
 {
 	int	i = start;
@@ -30,6 +31,7 @@ void	ft_map_dimensions(char **lines, int start, t_data *data)
 	data->map.height = i - start;
 	data->map.width = max_width;
 }
+
 int	ft_alloc_grid(t_data *data)
 {
 	int	i;
@@ -47,6 +49,7 @@ int	ft_alloc_grid(t_data *data)
 	}
 	return (1);
 }
+
 int	ft_fill_map(char **lines, int start, t_data *data)
 {
 	int	y = 0;
@@ -89,6 +92,7 @@ int	ft_fill_map(char **lines, int start, t_data *data)
 		return (ft_putstr_fd("Error: jugador no encontrado\n", 2), 0);
 	return (1);
 }
+
 int	ft_validate_map(t_data *data)
 {
 	int x, y;
