@@ -15,8 +15,6 @@ OBJDIR = obj
 SRCS := $(shell find $(SRCDIR) -type f -name "*.c")
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-HEADERS = libft.h
-
 # 🎨 Colors
 RED      = \033[0;31m
 GREEN    = \033[0;32m
@@ -42,7 +40,7 @@ $(OBJDIR):
 	@echo "$(GREEN)✅ Object directories created.$(RESET)"
 
 # 🏗 Compile `.c` files into `.o`, keeping subdirectory structure
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) | $(OBJDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)🔹 Compiling $< -> $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -52,13 +50,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) | $(OBJDIR)
 clean:
 	@echo "$(RED)🗑️  Deleting object files...$(RESET)"
 	@$(RM) -rf $(OBJDIR)
-	@$(RM) $(OBJS)
 	@echo "$(MAGENTA)✅ Object cleanup complete.$(RESET)"
-	@if [ -f "$(OBJDIR)" ]; then \
-		echo "$(RED)🚮 Deleting object directory...$(RESET)"; \
-		$(RM) -rf $(OBJDIR); \
-		echo "$(MAGENTA)✅ Object directory removed.$(RESET)"; \
-	fi
 
 # 🧹 Full cleanup (removes objects and .a file)
 fclean: clean

@@ -2,49 +2,38 @@
 
 int	ft_validate_walls(t_data *data)
 {
-	int x, y;
-	int w = data->map.width;
-	int h = data->map.height;
-	int **grid = data->map.grid;
+	t_numbers	n;
+	t_numbers	s;
 
-	for (y = 0; y < h; y++)
+	int **grid;
+	
+	grid = data->map.grid;
+	s.w = data->map.width;
+	s.h = data->map.height;
+	n.y = 0;
+	while (n.y < s.h)
 	{
-		for (x = 0; x < w; x++)
+		n.x = 0;
+		while (n.x < s.w)
 		{
-            fprintf(stderr, "%d ", grid[y][x]);
-			if (grid[y][x] == 0)
+			if (grid[n.y][n.x] == 0)
 			{
-				// No puede estar en el borde
-				if (x == 0 || y == 0 || x == w - 1 || y == h - 1)
+				if (n.x == 0 || n.y == 0 || n.x == s.w - 1 || n.y == s.h - 1)
 					return (ft_putstr_fd("Error: Map: not closed (border)\n", 2), 0);
-
-				// No puede estar junto a -1
-				if (grid[y - 1][x] == -1)
-                {
-                    fprintf(stderr, "Error: arriba (%d, %d) = -1\n", y - 1, x);
+				if (grid[n.y - 1][n.x] == -1)
                     return (ft_putstr_fd("Error: Map: not closed (hole - up)\n", 2), 0);
-                }
-                if (grid[y + 1][x] == -1)
-                {
-                    fprintf(stderr, "Error: abajo (%d, %d) = -1\n", y + 1, x);
+                if (grid[n.y + 1][n.x] == -1)
                     return (ft_putstr_fd("Error: Map: not closed (hole - down)\n", 2), 0);
-                }
-                if (grid[y][x - 1] == -1)
-                {
-                    fprintf(stderr, "Error: izquierda (%d, %d) = -1\n", y, x - 1);
+                if (grid[n.y][n.x - 1] == -1)
                     return (ft_putstr_fd("Error: Map: not closed (hole - left)\n", 2), 0);
-                }
-                if (grid[y][x + 1] == -1)
-                {
-                    fprintf(stderr, "Error: derecha (%d, %d) = -1\n", y, x + 1);
+                if (grid[n.y][n.x + 1] == -1)
                     return (ft_putstr_fd("Error: Map: not closed (hole - right)\n", 2), 0);
-                }
-
 			}
+			n.x++;
 		}
-        write(1, "\n", 1);
+		n.y++;
 	}
-	return (1);
+	return (11);
 }
 
 int	ft_validate_player(t_data *data)
