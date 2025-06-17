@@ -7,17 +7,17 @@ CFLAGS = -Wall -Wextra -Werror -I.
 AR = ar rcs
 RM = rm -f
 
-# 📂 Directorios de código y objetos
+# 📂 Code and object directories
 SRCDIR = src
 OBJDIR = obj
 
-# 🔍 Buscar archivos fuente en subdirectorios
+# 🔍 Find source files in subdirectories
 SRCS := $(shell find $(SRCDIR) -type f -name "*.c")
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 HEADERS = libft.h
 
-# 🎨 Colores
+# 🎨 Colors
 RED      = \033[0;31m
 GREEN    = \033[0;32m
 YELLOW   = \033[0;33m
@@ -26,49 +26,50 @@ CYAN     = \033[0;36m
 WHITE    = \033[0;37m
 RESET    = \033[0m
 
-# 🚀 Compilación principal
+# 🚀 Main compilation
 all: $(NAME)
 
-# 🔨 Crear archivo .a (builtins.a)
+# 🔨 Create .a archive (libft.a)
 $(NAME): $(OBJDIR) $(OBJS)
-	@echo "$(CYAN)🔗 Creando $(NAME)...$(RESET)"
+	@echo "$(CYAN)🔗 Creating $(NAME)...$(RESET)"
 	@$(AR) $(NAME) $(OBJS)
-	@echo "$(GREEN)✅ $(NAME) creado con éxito.$(RESET)"
+	@echo "$(GREEN)✅ $(NAME) successfully created.$(RESET)"
 
-# 📂 Crear directorio de objetos
+# 📂 Create object directory
 $(OBJDIR):
-	@echo "$(CYAN)📂 Creando directorios de objetos...$(RESET)"
+	@echo "$(CYAN)📂 Creating object directories...$(RESET)"
 	@mkdir -p $(OBJDIR)
-	@echo "$(GREEN)✅ Directorios de objetos creados.$(RESET)"
+	@echo "$(GREEN)✅ Object directories created.$(RESET)"
 
-# 🏗 Compilar archivos `.c` en `.o`, respetando subdirectorios
+# 🏗 Compile `.c` files into `.o`, keeping subdirectory structure
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) | $(OBJDIR)
 	@mkdir -p $(dir $@)
-	@echo "$(YELLOW)🔹 Compilando $< -> $@$(RESET)"
+	@echo "$(YELLOW)🔹 Compiling $< -> $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(GREEN)✅ Compilado: $@$(RESET)"
+	@echo "$(GREEN)✅ Compiled: $@$(RESET)"
 
-
-# 🧹 Limpieza de objetos
+# 🧹 Clean object files
 clean:
-	@echo "$(RED)🗑️  Eliminando archivos objeto...$(RESET)"
+	@echo "$(RED)🗑️  Deleting object files...$(RESET)"
+	@$(RM) -rf $(OBJDIR)
 	@$(RM) $(OBJS)
-	@echo "$(MAGENTA)✅ Limpieza de objetos completada.$(RESET)"
+	@echo "$(MAGENTA)✅ Object cleanup complete.$(RESET)"
 	@if [ -f "$(OBJDIR)" ]; then \
-		echo "$(RED)🚮 Eliminando directorio de objetos...$(RESET)"; \
+		echo "$(RED)🚮 Deleting object directory...$(RESET)"; \
 		$(RM) -rf $(OBJDIR); \
-		echo "$(MAGENTA)✅ Directorio obj eliminado.$(RESET)"; \
+		echo "$(MAGENTA)✅ Object directory removed.$(RESET)"; \
 	fi
 
-# 🧹 Limpieza total (elimina objetos y archivo .a)
+# 🧹 Full cleanup (removes objects and .a file)
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
-		echo "$(RED)🚮 Eliminando archivo $(NAME)...$(RESET)"; \
+		echo "$(RED)🚮 Deleting file $(NAME)...$(RESET)"; \
 		$(RM) $(NAME); \
-		echo "$(MAGENTA)✅ $(NAME) eliminado.$(RESET)"; \
+		echo "$(MAGENTA)✅ $(NAME) removed.$(RESET)"; \
 	fi
 
-# 🔄 Recompilación completa
+# 🔄 Full recompilation
 re: fclean all
 
 .PHONY: all clean fclean re
+

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_percent.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 18:53:10 by azubieta          #+#    #+#             */
+/*   Updated: 2025/06/17 18:57:16 by azubieta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../libft.h"
 
-int ft_handle_percent(va_list args)
+int	ft_handle_percent(va_list args)
 {
 	(void)args;
 	return (write(1, "%", 1));

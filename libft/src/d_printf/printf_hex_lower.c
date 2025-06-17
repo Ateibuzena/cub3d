@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_hex_lower.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 18:53:19 by azubieta          #+#    #+#             */
+/*   Updated: 2025/06/17 18:58:36 by azubieta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../libft.h"
 
 int	ft_puthex_printf(unsigned long n, int uppercase)
 {
 	int		count;
-	char *base;
+	char	*base;
 
 	if (uppercase)
 		base = "0123456789ABCDEF";
@@ -16,9 +28,9 @@ int	ft_puthex_printf(unsigned long n, int uppercase)
 	return (count);
 }
 
-int ft_handle_hex_lower(va_list args)
+int	ft_handle_hex_lower(va_list args)
 {
-	unsigned int n;
+	unsigned int	n;
 
 	n = va_arg(args, unsigned int);
 	return (ft_puthex_printf(n, 0));

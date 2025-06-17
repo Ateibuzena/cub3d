@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_clean_double.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 19:01:26 by azubieta          #+#    #+#             */
+/*   Updated: 2025/06/17 19:01:34 by azubieta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft.h"
 
 char	**ft_clean_double(char **original, char to_clean)
@@ -24,6 +36,5 @@ char	**ft_clean_double(char **original, char to_clean)
 		i++;
 	}
 	cleaned[len] = NULL;
-	//ft_freedouble(original);
 	return (cleaned);
 }

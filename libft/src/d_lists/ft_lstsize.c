@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:08:29 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 18:54:41 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:00:37 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_lstsize(t_list *lst)
 {
 	int			i;
-	t_list	*sublist;
+	t_list		*sublist;
 
 	i = 0;
 	sublist = lst;

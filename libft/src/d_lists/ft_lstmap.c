@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:43:18 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 18:54:30 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:00:54 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*nodo;
+	t_list		*nodo;
 	void		*temp;
-	t_list	*sublist;
-	t_list	*new_list;
+	t_list		*sublist;
+	t_list		*new_list;
 
 	sublist = lst;
 	new_list = 0;
