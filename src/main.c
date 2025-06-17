@@ -2,41 +2,19 @@
 
 int	ft_init_map(char **lines, t_data *data)
 {
-	char	**cleaned;
-	int		start;
-
-	start = ft_is_map(lines);
+	int start;
+	
+	start = ft_map_start(lines);
 	if (start == -1)
+		return (ft_putstr_fd("Error: Map: not found\n", 2), 0);
+	ft_map_dimensions(lines, start, data);
+	if (!ft_alloc_grid(data))
+		return (ft_putstr_fd("Error: Map: malloc failed\n", 2), 0);
+	if (!ft_fill_map(lines, start, data))
 		return (0);
-	cleaned = ft_clean_double(lines, ' ');
-	ft_get_dimensions(cleaned, start, data);
-	if (!ft_allocate_grid(cleaned, start, data))
-	{
-		ft_freedouble(cleaned);
+	if (!ft_validate_map(data))
 		return (0);
-	}
-	/*if (!ft_parse_map(cleaned, start, data))
-	{
-		ft_freedouble(cleaned);
-		ft_freedouble_array(data->map.grid, data->map.height);
-		return (0);
-	}*/
-	if (!ft_fill_grid(cleaned, start, data))
-	{
-		ft_freedouble(cleaned);
-		ft_freedouble_array(data->map.grid, data->map.height);
-		return (0);
-	}
-	if (!ft_validate_walls(data))
-	{
-		ft_freedouble(cleaned);
-		ft_freedouble_array(data->map.grid, data->map.height);
-		return (0);
-	}
 	return (1);
-	/*if (game->map.grid[y][x] == 1)
-				ft_draw_square(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, RED_NEON, game);
-			*///mapita
 }
 
 int ft_init_player(t_game *game, t_data data)
@@ -87,9 +65,10 @@ int	ft_init_data(t_game *game, char *path)
 	if (!ft_init_map(lines, &data))
 	{
 		ft_freedouble(lines);
+		ft_freedouble_array(data.map.grid, data.map.height);
 		//liberar paths
 		//liberar texturas
-		ft_putstr_fd("Error: MLX42 failed to create map\n", 2);
+		ft_putstr_fd("Error: MLX42 failed to parse map section\n", 2);
 		return (0);
 	}
 	game->map = data.map;
@@ -133,7 +112,6 @@ void	ft_init_game(t_game *game, char *file)
 		mlx_terminate(game->mlx);
 		exit(EXIT_FAILURE);
 	}
-	
 }
 
 int	main(int argc, char **argv)

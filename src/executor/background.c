@@ -1,6 +1,6 @@
 #include "../../include/cub3dft.h"
 
-static int	ft_compute_y(int area)
+/*static int	ft_compute_y(int area)
 {
 	int	origin_y;
 
@@ -76,4 +76,4 @@ void	ft_draw_background(t_game *game, int area)
 	ctx.area = area;
 	ctx.color = (area == BG_FLOOR) ? LINE_FLOOR : LINE_CEILING;
 	ft_draw_grid_area(game, &ctx);
-}
+}*/

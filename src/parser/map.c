@@ -1,137 +1,114 @@
 #include "../../include/cub3dft.h"
 
-int	ft_is_map(char **lines)
+int	ft_map_start(char **lines)
 {
-	int i = 0;
+	int	i = 0;
 
 	while (lines[i])
 	{
 		int j = 0;
-		while (lines[i][j] == ' ')
+		while (lines[i][j] == ' ' || lines[i][j] == '\t')
 			j++;
-		if (lines[i][j] == '1')
+		if (lines[i][j] == '1' || lines[i][j] == '0')
 			return (i);
 		i++;
 	}
-	ft_putstr_fd("Error: Map: not found\n", 2);
 	return (-1);
 }
-
-void		ft_get_dimensions(char **lines, int start, t_data *data)
+void	ft_map_dimensions(char **lines, int start, t_data *data)
 {
-	int	w;
-	int	h;
-	int	len;
+	int	i = start;
+	int	max_width = 0;
 
-	w = 0;
-	h = 0;
-	while (lines[start])
+	while (lines[i])
 	{
-		len = ft_strlen_nospace(lines[start]);
-		if (len > w)
-			w = len;
-		h++;
-		start++;
+		int len = ft_strlen(lines[i]);
+		if (len > max_width)
+			max_width = len;
+		i++;
 	}
-	data->map.width = w;
-	data->map.height = h;
+	data->map.height = i - start;
+	data->map.width = max_width;
 }
-
-
-int	ft_allocate_grid(char **lines, int start, t_data *data)
+int	ft_alloc_grid(t_data *data)
 {
 	int	i;
-	int	j;
-	int len;
 
-	data->map.grid = malloc(data->map.height * sizeof(int *));
+	data->map.grid = malloc(sizeof(int *) * data->map.height);
 	if (!data->map.grid)
-		return (ft_putstr_fd("Error: Map: malloc error\n", 2), 0);
+		return (0);
 	i = 0;
 	while (i < data->map.height)
 	{
-		len = ft_strlen_nospace(lines[start + i]);
-		data->map.grid[i] = malloc(data->map.width * sizeof(int));
+		data->map.grid[i] = malloc(sizeof(int) * data->map.width);
 		if (!data->map.grid[i])
-		{
-			ft_freedouble_array(data->map.grid, i);
-			return (ft_putstr_fd("Error: Map: malloc error\n", 2), 0);
-		}
-		j = 0;
-		while (j < data->map.width)
-		{
-			data->map.grid[i][j] = -1;
-			j++;
-		}
+			return (0);
 		i++;
 	}
 	return (1);
 }
-
-int	ft_parse_map(char **lines, int start, t_data *data)
+int	ft_fill_map(char **lines, int start, t_data *data)
 {
-	int	i;
-	char c;
+	int	y = 0;
+	int	player_found = 0;
 
-	i = 0;
-	while (i < data->map.height)
+	while (y < data->map.height)
 	{
-		int j = 0;
-		while (lines[start + i][j])
+		int x = 0;
+		int i = 0;
+		while (lines[start + y][i])
 		{
-			c = lines[start + i][j];
-			if (c == ' ' || c == '\t' || c == '\n' || c == '0' || c == '1' ||
-				c == 'N' || c == 'S' || c == 'E' || c == 'W')
-			{
-				j++;
-				continue ;
-			}
-			ft_freedouble_array(data->map.grid, data->map.height);
-			return (ft_putstr_fd("Error: Map: not valid\n", 2), 0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	ft_fill_grid(char **lines, int start, t_data *data)
-{
-	int i = 0;
-	int player_found = 0;
-
-	while (i < data->map.height)
-	{
-		int j = 0;
-		while (lines[start + i][j])
-		{
-			char c = lines[start + i][j];
-
-			/*if (c == ' ' || c == '\t' || c == '\n')
-				data->map.grid[i][j] = -1;
-			else */if (c == '1')
-				data->map.grid[i][j] = 1;
+			char c = lines[start + y][i];
+			if (c == ' ')
+				data->map.grid[y][x] = -1;
+			else if (c == '1')
+				data->map.grid[y][x] = 1;
 			else if (c == '0')
-				data->map.grid[i][j] = 0;
+				data->map.grid[y][x] = 0;
 			else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
 				if (player_found)
-					return (ft_putstr_fd("Error: multiple player positions\n", 2), 0);
-				player_found = 1;
-				data->map.grid[i][j] = 0;
-				data->player_x = j;
-				data->player_y = i;
+					return (ft_putstr_fd("Error: múltiples jugadores\n", 2), 0);
+				data->map.grid[y][x] = 0;
+				data->player_x = x;
+				data->player_y = y;
 				data->player_dir = c;
+				player_found = 1;
 			}
 			else
-				data->map.grid[i][j] = -1;
-			j++;
+				return (ft_putstr_fd("Error: carácter inválido en el mapa\n", 2), 0);
+			x++;
+			i++;
 		}
-		// rellena el resto de la fila con -1 si es más corta que data->map.width
-		while (j < data->map.width)
-			data->map.grid[i][j++] = -1;
-		i++;
+		// Rellenar el resto de la fila con -1
+		while (x < data->map.width)
+			data->map.grid[y][x++] = -1;
+		y++;
 	}
 	if (!player_found)
-		return (ft_putstr_fd("Error: player not found\n", 2), 0);
+		return (ft_putstr_fd("Error: jugador no encontrado\n", 2), 0);
+	return (1);
+}
+int	ft_validate_map(t_data *data)
+{
+	int x, y;
+	int w = data->map.width;
+	int h = data->map.height;
+	int **grid = data->map.grid;
+
+	for (y = 0; y < h; y++)
+	{
+		for (x = 0; x < w; x++)
+		{
+			if (grid[y][x] == 0)
+			{
+				if (x == 0 || y == 0 || x == w - 1 || y == h - 1)
+					return (ft_putstr_fd("Error: mapa no cerrado (borde)\n", 2), 0);
+				if (grid[y - 1][x] == -1 || grid[y + 1][x] == -1 ||
+					grid[y][x - 1] == -1 || grid[y][x + 1] == -1)
+					return (ft_putstr_fd("Error: mapa no cerrado (agujero)\n", 2), 0);
+			}
+		}
+	}
 	return (1);
 }

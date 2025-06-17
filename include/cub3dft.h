@@ -8,23 +8,24 @@
 # include <math.h>
 # include <limits.h>
 
-# define PINK_NEON      0xFF69B4FF  // rosa vibrante (hot pink)
-# define CYAN_NEON      0x00FFFFFF  // cian neón brillante
-# define ORANGE_NEON    0xFFA500FF  // naranja fuerte
-# define LIME_NEON      0xBFFF00FF  // lima neón (verde limón)
-# define AQUA_NEON      0x7FFFD4FF  // aqua (verde agua brillante)
-# define MAGENTA_NEON   0xFF00FFFF  // (ya lo tienes, pero es el fucsia neón clásico)
-# define WHITE_NEON     0xFFFFFFFF  // blanco puro (para contraste)
-# define GREY_NEON      0xA9A9A9FF  // gris medio, aún visible
-# define SKYBLUE_NEON   0x87CEFAFF  // azul cielo neón suave
-# define GOLD_NEON      0xFFD700FF  // dorado vibrante
-# define VIOLET_NEON    0x8A2BE2FF  // violeta eléctrico
-# define BLUE_NEON 		0x0000FFFF
-# define YELLOW_NEON	0xFFFF00FF
-# define GREEN_NEON 	0x00FF00FF
-# define BLACK_NEON 	0x000000FF
-# define RED_NEON 		0xFF0000FF
-# define VIOLET_DARK  	0x4B0082FF
+# define GOLD_NEON      0xFFD700FF  // (glod)
+# define GREY_NEON      0xA9A9A9FF  // (grey)
+# define WHITE_NEON     0xFFFFFFFF  // (white)
+# define LIME_NEON      0xBFFF00FF  // (green lemon)
+# define VIOLET_NEON    0x8A2BE2FF  // (neon purple)
+# define PINK_NEON      0xFF69B4FF  // (hot pink)
+
+# define AQUA		    0x7FFFD4FF  // (water)
+# define SKYBLUE		0x87CEFAFF  // (blue sky)
+# define MAGENTA		0xFF00FFFF  // (neon fucsia)
+# define CYAN		    0x00FFFFFF  // (neon cian)
+# define ORANGE    		0xFFA500FF  // (orange)
+# define BLUE 			0x0000FFFF  // (blue)
+# define YELLOW			0xFFFF00FF  // (yellow)
+# define GREEN 			0x00FF00FF  // (green)
+# define BLACK 			0x000000FF  // (black)
+# define RED 			0xFF0000FF  // (red)
+# define VIOLET  		0x4B0082FF  // (purple)
 
 # define M_PI 3.14159265358979323846
 
@@ -82,6 +83,8 @@ typedef struct s_hit
 	int	wall_type;
 }	t_hit;
 
+/*-------------OPCIONAL--------------*/
+
 # define LINE_FLOOR BLACK_NEON
 # define LINE_CEILING BLACK_NEON
 # define VANISH_Y (HEIGHT / 2)
@@ -97,6 +100,15 @@ typedef struct s_background
 	int		area;
 	int		color;
 }	t_background;
+
+
+/*background.c*/
+//void			ft_draw_background(t_game *game, int area);
+//void			ft_draw_horizontal(t_background *ctx, t_game *game);
+//void			ft_draw_radial(t_background *ctx, double dx, double dy, t_game *game);
+//void			ft_draw_vertical(t_background *ctx, t_game *game);
+
+/*-----------------------------------*/
 
 typedef struct s_textures
 {
@@ -159,11 +171,11 @@ int				ft_init_data(t_game *game, char *path);
 void			ft_init_game(t_game *game, char *file);
 
 /*map.c*/
-int				ft_is_map(char **lines);
-void			ft_get_dimensions(char **lines, int start, t_data *data);
-int				ft_allocate_grid(char **lines, int start, t_data *data);
-int				ft_parse_map(char **lines, int start, t_data *data);
-int				ft_fill_grid(char **lines, int start, t_data *data);
+int				ft_map_start(char **lines);
+void			ft_map_dimensions(char **lines, int start, t_data *data);
+int				ft_alloc_grid(t_data *data);
+int				ft_fill_map(char **lines, int start, t_data *data);
+int				ft_validate_map(t_data *data);
 
 /*handler.c*/
 void 			ft_key_press(t_game *game, int key);
@@ -190,12 +202,6 @@ void 			ft_init_step(t_ray *ray, t_player *player);
 void 			ft_perform_dda(t_ray *ray, t_game *game);
 t_hit 			ft_calculate_hit(t_player *player, t_ray *ray, float ray_angle);
 t_hit 			ft_cast_ray(t_game *game, float ray_angle);
-
-/*background.c*/
-void			ft_draw_background(t_game *game, int area);
-void			ft_draw_horizontal(t_background *ctx, t_game *game);
-void			ft_draw_radial(t_background *ctx, double dx, double dy, t_game *game);
-void			ft_draw_vertical(t_background *ctx, t_game *game);
 
 /*textures.c*/
 int				ft_load_textures(t_game *game, t_data data);
