@@ -17,17 +17,17 @@ int	ft_init_map(char **lines, t_data *data)
 	return (1);
 }
 
-int ft_init_player(t_game *game, t_data data)
+int ft_init_player(t_game *game, t_data *data)
 {
-    game->player.x = (data.player_x * TILE_SIZE) + PLAYER_RADIUS;
-    game->player.y = (data.player_y * TILE_SIZE) + PLAYER_RADIUS;
-    if (data.player_dir == 'E')
+    game->player.x = (data->player_x * TILE_SIZE) + PLAYER_RADIUS;
+    game->player.y = (data->player_y * TILE_SIZE) + PLAYER_RADIUS;
+    if (data->player_dir == 'E')
         game->player.angle = 0;
-    if (data.player_dir == 'S')
+    if (data->player_dir == 'S')
         game->player.angle = M_PI / 2;
-    if (data.player_dir == 'W')
+    if (data->player_dir == 'W')
         game->player.angle = M_PI;
-    if (data.player_dir == 'N')
+    if (data->player_dir == 'N')
         game->player.angle = 3 * M_PI / 2;
     game->player.key_up = false;
     game->player.key_down = false;
@@ -35,12 +35,12 @@ int ft_init_player(t_game *game, t_data data)
     game->player.key_left = false;
     game->player.left_rotate = false;
     game->player.right_rotate = false;
-    game->floor = data.floor;
-    game->ceiling = data.ceiling;
-	if (!ft_validate_player(&data) || !data.player_dir || data.player_x <= 0 || data.player_y <= 0)
+    game->floor = data->floor;
+    game->ceiling = data->ceiling;
+	if (!ft_validate_player(data) || !data->player_dir || data->player_x <= 0 || data->player_y <= 0)
 	{
 		ft_putstr_fd("Error: Player position not valid\n", 2);
-		ft_freedouble_array(data.map.grid, data.map.height);
+		//ft_freedouble_array(data->map.grid, data->map.height);
 		return (0);
 	}
 	return (1);
@@ -51,48 +51,77 @@ int	ft_init_data(t_game *game, char *path)
 	char	**lines;
 	t_data	data;
 
+	fprintf(stderr, "Reading file: %s\n", path);
 	lines = ft_read_file(path);
 	if (!lines)
 		return (ft_putstr_fd("Error: File: not readed\n", 2), 0);
+	fprintf(stderr, "File readed successfully\n");
+
+	fprintf(stderr, "Parsing configuration section\n");
 	if (!ft_parse_configuration(lines, &data))
-		return (ft_freedouble(lines), 0);
+	{
+		ft_freedouble(lines);
+		ft_free_paths(&data);
+		ft_putstr_fd("Error: MLX42 failed to parse configuration section\n", 2);
+		return (0);
+	}
+	fprintf(stderr, "Configuration parsed successfully\n");
+
+	fprintf(stderr, "Loading textures\n");
 	if (!ft_load_textures(game, data))
 	{
-		//liberar texturas cargadas
+		ft_freedouble(lines);
+		ft_free_paths(&data);
+		ft_free_textures(game);
 		ft_putstr_fd("MLX42: failed to load texture\n", 2);
 		return (0);
 	}
+	fprintf(stderr, "Textures loaded successfully\n");
+
+	fprintf(stderr, "Initializing map\n");
 	if (!ft_init_map(lines, &data))
 	{
 		ft_freedouble(lines);
-		ft_freedouble_array(data.map.grid, data.map.height);
-		//liberar paths
-		//liberar texturas
+		ft_free_paths(&data);
+		ft_free_textures(game);
+		//liberar mapa
 		ft_putstr_fd("Error: MLX42 failed to parse map section\n", 2);
 		return (0);
 	}
 	game->map = data.map;
-	if (!ft_init_player(game, data))
+	fprintf(stderr, "Map initialized successfully: width=%d, height=%d\n", game->map.width, game->map.height);
+	
+	fprintf(stderr, "Initializing player\n");
+	if (!ft_init_player(game, &data))
 	{
 		ft_freedouble(lines);
-		ft_freedouble_array(data.map.grid, data.map.height);
-		//liberar paths
-		//liberar texturas
+		//liberar mapa
+		ft_free_paths(&data);
+		ft_free_textures(game);
 		ft_putstr_fd("Error: MLX42 failed to create player\n", 2);
 		return (0);
 	}
+	fprintf(stderr, "Player initialized successfully: x=%f, y=%f, angle=%f\n", 
+		game->player.x, game->player.y, game->player.angle);
+	
+	ft_freedouble(lines);
+	ft_free_paths(&data);
+	ft_putstr_fd("Game initialized successfully\n", 1);
 	return (1);
 }
 
 void	ft_init_game(t_game *game, char *file)
 {
-	
+	fprintf(stderr, "Initializing game\n");
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
 	{
 		ft_putstr_fd("Error: MLX42: failed to initialize\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	fprintf(stderr, "MLX42 initialized successfully\n");
+
+	fprintf(stderr, "Creating image with dimensions: %dx%d\n", WIDTH, HEIGHT);
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->img)
 	{
@@ -100,12 +129,17 @@ void	ft_init_game(t_game *game, char *file)
 		mlx_terminate(game->mlx);
 		exit(EXIT_FAILURE);
 	}
+	fprintf(stderr, "Image created successfully\n");
+
+	fprintf(stderr, "Loading image to window\n");
     if(mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 	{
 		ft_putstr_fd("Error: MLX42: failed to display image\n", 2);
 		mlx_terminate(game->mlx);
 		exit(EXIT_FAILURE);
 	}
+	fprintf(stderr, "Image displayed successfully\n");
+
 	if (!ft_init_data(game, file))
 	{
 		mlx_close_window(game->mlx);
@@ -125,8 +159,11 @@ int	main(int argc, char **argv)
 
 	//ft_draw_square(WIDTH / 2, HEIGHT / 2, TILE_SIZE, 0x00FF00FF, &game);
 	mlx_loop_hook(game.mlx, (void *)ft_handle_loop, &game);
-
+	
 	mlx_loop(game.mlx);
-	mlx_terminate(game.mlx);
+	//ft_free_textures(game);
+	//ft_freedouble_array(game->map.grid, game->map.height);
+	//mlx_terminate(game.mlx);
+	//ft_putstr_fd("Game terminated successfully\n", 1);
 	return (0);
 }

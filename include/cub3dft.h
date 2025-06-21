@@ -166,7 +166,7 @@ typedef struct s_game
 
 /*main.c*/
 int				ft_init_map(char **lines, t_data *data);
-int 			ft_init_player(t_game *game, t_data data);
+int 			ft_init_player(t_game *game, t_data *data);
 int				ft_init_data(t_game *game, char *path);
 void			ft_init_game(t_game *game, char *file);
 
@@ -226,5 +226,8 @@ int				ft_strlen_nospace(char *str);
 /*check.c*/
 int				ft_validate_walls(t_data *data);
 int				ft_validate_player(t_data *data);
+
+void	ft_free_textures(t_game *game);
+void	ft_free_paths(t_data *data);
 
 #endif
