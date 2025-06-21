@@ -44,7 +44,13 @@ int	ft_alloc_grid(t_data *data)
 	{
 		data->map.grid[i] = malloc(sizeof(int) * data->map.width);
 		if (!data->map.grid[i])
+		{
+			while (--i >= 0)
+				free(data->map.grid[i]);
+			free(data->map.grid);
+			data->map.grid = NULL;
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -71,7 +77,7 @@ int	ft_fill_map(char **lines, int start, t_data *data)
 			else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
 				if (player_found)
-					return (ft_putstr_fd("Error: múltiples jugadores\n", 2), 0);
+					return (ft_putstr_fd("Error: Player: multiplayers\n", 2), 0);
 				data->map.grid[y][x] = 0;
 				data->player_x = x;
 				data->player_y = y;
@@ -79,7 +85,7 @@ int	ft_fill_map(char **lines, int start, t_data *data)
 				player_found = 1;
 			}
 			else
-				return (ft_putstr_fd("Error: carácter inválido en el mapa\n", 2), 0);
+				return (ft_putstr_fd("Error: Player: syntax not valid\n", 2), 0);
 			x++;
 			i++;
 		}
@@ -89,7 +95,7 @@ int	ft_fill_map(char **lines, int start, t_data *data)
 		y++;
 	}
 	if (!player_found)
-		return (ft_putstr_fd("Error: jugador no encontrado\n", 2), 0);
+		return (ft_putstr_fd("Error: Player: not found\n", 2), 0);
 	return (1);
 }
 
@@ -107,10 +113,10 @@ int	ft_validate_map(t_data *data)
 			if (grid[y][x] == 0)
 			{
 				if (x == 0 || y == 0 || x == w - 1 || y == h - 1)
-					return (ft_putstr_fd("Error: mapa no cerrado (borde)\n", 2), 0);
+					return (ft_putstr_fd("Error: Map: not close (borde)\n", 2), 0);
 				if (grid[y - 1][x] == -1 || grid[y + 1][x] == -1 ||
 					grid[y][x - 1] == -1 || grid[y][x + 1] == -1)
-					return (ft_putstr_fd("Error: mapa no cerrado (agujero)\n", 2), 0);
+					return (ft_putstr_fd("Error: Map: not close (agujero)\n", 2), 0);
 			}
 		}
 	}
