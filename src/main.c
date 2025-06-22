@@ -170,11 +170,13 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(game.mlx, (void *)ft_handle_loop, &game);
 	
 	mlx_loop(game.mlx);
+
 	mlx_close_window(game.mlx);
 	mlx_delete_image(game.mlx, game.img);
 	ft_free_textures(&game);
 	ft_freedouble_array(game.map.grid, game.map.height);
 	mlx_terminate(game.mlx);
+	
 	ft_putstr_fd("\nGame terminated successfully\n", 1);
 	return (0);
 }
