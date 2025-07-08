@@ -1,14 +1,14 @@
-NO /home/azubieta/Desktop/cub3d/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
-SO /home/azubieta/Desktop/cub3d/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
-WE /home/azubieta/Desktop/cub3d/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
-EA /home/azubieta/Desktop/cub3d/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
+NO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
+SO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
+WE /home/azubieta/Desktop/cub3d_github/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
+EA /home/azubieta/Desktop/cub3d_github/textures/1400x1400/hot_blackhole/parabolic_ellipse.png
 F 255,165,0
 C 75,0,130
 1111111111111111111111111
 1000000000110000000000001
 1011000001110000000000001
 1001000000000000000000001
-111111111011000001110000000000001
+111111111011000001110000111111111
 100000000011000001110111111111111
 11110111111111011100000010001
 11110111111111011101010010001
