@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3dft.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
+/*   Updated: 2025/07/08 14:13:26 by azubieta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3DFT_H
 # define CUB3DFT_H
 
@@ -29,144 +41,121 @@
 
 # define M_PI 3.14159265358979323846
 
-# define TILE_SIZE 1400
-
 typedef struct s_map
 {
-    int		**grid;
-    int		width;
-    int		height;
+	int		**grid;
+	int		width;
+	int		height;
 }	t_map;
-
-#define PLAYER_RADIUS (TILE_SIZE * 0.1)
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	angle;
+	float			x;
+	float			y;
+	float			angle;
+	float			radius;
 
-	bool	key_up;
-	bool	key_down;
-	bool	key_left;
-	bool	key_right;
-	bool	left_rotate;
-	bool	right_rotate;
+	bool			key_up;
+	bool			key_down;
+	bool			key_left;
+	bool			key_right;
+	bool			left_rotate;
+	bool			right_rotate;
+
+	unsigned int	tile_size;
 }	t_player;
 
-
-# define FOV (M_PI / 2)
+# define FOV 1.57079632679
 
 typedef struct s_ray
 {
-	float ray_dir_x;
-	float ray_dir_y;
-	float delta_dist_x;
-	float delta_dist_y;
-	float side_dist_x;
-	float side_dist_y;
-	int step_x;
-	int step_y;
-	int map_x;
-	int map_y;
-	int side; // 0 = vertical, 1 = horizontal
-	int wall_type;
+	float	ray_dir_x;
+	float	ray_dir_y;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	float	side_dist_x;
+	float	side_dist_y;
+	int		step_x;
+	int		step_y;
+	int		map_x;
+	int		map_y;
+	int		side; // 0 = vertical, 1 = horizontal
+	int		wall_type;
 }	t_ray;
 
 typedef struct s_hit
 {
-	float x;
-	float y;
-	char  face; // 'N', 'S', 'E', 'W'
-	float distance;
-	float wall_height;
-	int	wall_type;
+	float			x;
+	float			y;
+	char			face; // 'N', 'S', 'E', 'W'
+	float			distance;
+	float			wall_height;
+	int				wall_type;
+	unsigned int	tile_size;
 }	t_hit;
-
-/*-------------OPCIONAL--------------*/
-
-# define LINE_FLOOR BLACK_NEON
-# define LINE_CEILING BLACK_NEON
-# define VANISH_Y (HEIGHT / 2)
-# define GRID_SPACING 48
-# define BG_NONE    0
-# define BG_FLOOR   1
-# define BG_CEILING 2
-
-typedef struct s_background
-{
-	int		origin_x;
-	int		origin_y;
-	int		area;
-	int		color;
-}	t_background;
-
-
-/*background.c*/
-//void			ft_draw_background(t_game *game, int area);
-//void			ft_draw_horizontal(t_background *ctx, t_game *game);
-//void			ft_draw_radial(t_background *ctx, double dx, double dy, t_game *game);
-//void			ft_draw_vertical(t_background *ctx, t_game *game);
-
-/*-----------------------------------*/
 
 typedef struct s_textures
 {
-    mlx_texture_t *north;
-    mlx_texture_t *south;
-    mlx_texture_t *east;
-    mlx_texture_t *west;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
+	xpm_t			*north_xpm;
+	xpm_t			*south_xpm;
+	xpm_t			*east_xpm;
+	xpm_t			*west_xpm;
 }	t_textures;
 
 typedef struct s_wall
 {
-    t_hit           hit;
-    mlx_texture_t  *texture;
-    float           height;
-    int             start_y;
-    int             end_y;
-    int             tex_x;
-    float           step;
-    float           tex_pos;
-}   t_wall;
+	mlx_texture_t	*texture;
+	t_hit			hit;
+	float			height;
+	int				start_y;
+	int				end_y;
+	int				tex_x;
+	float			step;
+	float			tex_pos;
+}	t_wall;
 
 typedef struct s_paths
 {
-	char *north;
-	char *south;
-	char *west;
-	char *east;
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
 }	t_paths;
 
 typedef struct s_data
 {
-    t_map			map;
+	t_map			map;
 	t_paths			paths;
 	unsigned int	floor;
 	unsigned int	ceiling;
 	int				player_x;
 	int				player_y;
 	char			player_dir;
-}   t_data;
+}	t_data;
 
 # define WIDTH 3840
 # define HEIGHT 2160
 
 typedef struct s_game
 {
-    mlx_t			*mlx;
-    mlx_image_t		*img;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 	t_map			map;
 	t_player		player;
 	t_textures		textures;
 	t_wall			wall;
 	unsigned int	floor;
 	unsigned int	ceiling;
+	unsigned int	tile_size;
 }	t_game;
 
 /*main.c*/
 int				ft_init_map(char **lines, t_data *data);
-int 			ft_init_player(t_game *game, t_data *data);
+int				ft_init_player(t_game *game, t_data *data);
 int				ft_init_data(t_game *game, char *path);
 void			ft_init_game(t_game *game, char *file);
 
@@ -178,37 +167,37 @@ int				ft_fill_map(char **lines, int start, t_data *data);
 int				ft_validate_map(t_data *data);
 
 /*handler.c*/
-void 			ft_key_press(t_game *game, int key);
-void 			ft_key_release(t_game *game, int key);
-void 			ft_handle_key(mlx_key_data_t keydata, void *param);
+void			ft_key_press(t_game *game, int key);
+void			ft_key_release(t_game *game, int key);
+void			ft_handle_key(mlx_key_data_t keydata, void *param);
 int				ft_handle_loop(t_game *game);
 
 /*draw.c*/
-void    		ft_draw_square(int x, int y, int size, int color, t_game *game);
+void			ft_draw_point(t_numbers p, int size, int color, t_game *game);
+void			ft_draw_wall(t_game *game, int i, t_wall *wall);
 void			ft_clear_image(t_game *game);
 
 /*render.c*/
 void			ft_render_wall(t_game *game, float ray_angle, int i);
 
 /*player.c*/
-void 			ft_rotate_player(t_game *game);
-bool    		ft_touch(float px, float py, t_game *game);
-void 			ft_move_direction(t_game *game, float dx, float dy);
-void 			ft_move_player(t_game *game);
+void			ft_rotate_player(t_game *game);
+bool			ft_touch(float px, float py, t_game *game);
+void			ft_move_direction(t_game *game, float dx, float dy);
+void			ft_move_player(t_game *game);
 
 /*raycasting.c*/
-void 			ft_init_ray(t_ray *ray, t_player *player, float ray_angle);
-void 			ft_init_step(t_ray *ray, t_player *player);
-void 			ft_perform_dda(t_ray *ray, t_game *game);
-t_hit 			ft_calculate_hit(t_player *player, t_ray *ray, float ray_angle);
-t_hit 			ft_cast_ray(t_game *game, float ray_angle);
+void			ft_init_ray(t_ray *ray, t_player *player, float ray_angle);
+void			ft_init_step(t_ray *ray, t_player *player);
+void			ft_perform_dda(t_ray *ray, t_game *game);
+t_hit			ft_calculate_hit(t_player *player, t_ray *ray, float ray_angle);
+t_hit			ft_cast_ray(t_game *game, float ray_angle);
 
 /*textures.c*/
 int				ft_load_textures(t_game *game, t_data data);
 mlx_texture_t	*ft_get_texture(t_game *game, char face);
-void 			ft_init_mapping(t_wall *wall);
+void			ft_init_mapping(t_wall *wall);
 uint32_t		ft_get_color(t_wall *wall, int tex_y);
-void			ft_draw_wall(t_game *game, int i, t_wall *wall);
 
 /*read.c*/
 char			**ft_read_file(char *path);
@@ -222,12 +211,12 @@ int				ft_parse_configuration(char **lines, t_data *data);
 
 /*utils.c*/
 int				ft_strlen_nospace(char *str);
+void			ft_free_textures(t_game *game);
+void			ft_free_paths(t_data *data);
 
 /*check.c*/
 int				ft_validate_walls(t_data *data);
 int				ft_validate_player(t_data *data);
-
-void	ft_free_textures(t_game *game);
-void	ft_free_paths(t_data *data);
+mlx_texture_t	*ft_validate_textures(const char *path, xpm_t **xpm_storage);
 
 #endif
