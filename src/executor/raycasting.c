@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:40:32 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 14:46:54 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:48:25 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_hit	ft_calculate_hit(t_hit *hit, t_player *player, t_ray *ray, float angle)
 	hit->distance = hit->wall_dist * cos(angle - player->angle);
 	if (hit->distance < 0.1)
 		hit->distance = 0.1;
-	return (hit);
+	return (*hit);
 }
 
 t_hit	ft_cast_ray(t_game *game, float ray_angle)
