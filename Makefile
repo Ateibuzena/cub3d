@@ -7,6 +7,7 @@ LDFLAGS = -LMLX42/build -lmlx42 -lglfw -lm -ldl -pthread
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_SRCS := $(shell find $(LIBFT_DIR) -name '*.c' -o -name '*.h')
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -19,52 +20,53 @@ RED      = \033[0;31m
 GREEN    = \033[0;32m
 YELLOW   = \033[0;33m
 MAGENTA  = \033[0;35m
+PINK = \033[38;2;255;105;180m
 CYAN     = \033[0;36m
 WHITE    = \033[0;37m
 RESET    = \033[0m
 
 all: $(NAME)
-	
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
 
 MLX42/build/libmlx42.a:
 	@cmake -S MLX42 -B MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
 	@cmake --build MLX42/build --parallel
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT) MLX42/build/libmlx42.a
-	@echo "$(CYAN)🔨 Building $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) MLX42/build/libmlx42.a -o $(NAME)
-	@echo "$(GREEN)✅ Build complete: $(NAME)$(RESET)"
+	@echo "$(YELLOW)✅ Build complete: $(NAME)$(RESET)"
 
 $(OBJ_DIR):
-	@echo "$(CYAN)📂 Creating object directories...$(RESET)"
 	@mkdir -p $(OBJ_DIR)
-	@echo "$(GREEN)✅ Object directories created.$(RESET)"
+	@echo "$(YELLOW)✅ Object directories created.$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	@echo "$(YELLOW)🔹 Compiling $< -> $@$(RESET)"
+	@echo "$(CYAN)🔹 Compiling$(MAGENTA) $<$(CYAN) ->$(PINK) $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(GREEN)✅ Compiled: $@$(RESET)"
+	
+$(LIBFT): $(LIBFT_SRCS)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	@echo "$(RED)🧹 Cleaning libft...$(RESET)"
+	@echo "$(GREEN)🧹 Cleaning libft...$(RESET)"
 	@make -C libft clean
-	@echo "$(RED)🧹 Cleaning cub3d...$(RESET)"
-	@echo "$(RED)🗑️  Deleting object files...$(RESET)"
+	@echo "$(GREEN)🧹 Cleaning cub3d...$(RESET)"
+	@echo "$(GREEN)🗑️  Deleting object files...$(RESET)"
 	@$(RM) -rf $(OBJ_DIR)
-	@echo "$(MAGENTA)✅ Object cleanup complete.$(RESET)"
+	@echo "$(GREEN)🧹 Cleaning MLX42 object files...$(RESET)"
+	@cmake --build MLX42/build --target clean
+	@echo "$(YELLOW)✅ Object cleanup complete.$(RESET)"
 
 fclean:
-	@echo "$(RED)🧹 Cleaning libft...$(RESET)"
+	@echo "$(GREEN)🧹 Cleaning libft...$(RESET)"
 	@make -C libft fclean
-	@echo "$(RED)🧹 Cleaning cub3d...$(RESET)"
-	@echo "$(RED)🚮 Deleting file $(NAME)...$(RESET)"
+	@echo "$(GREEN)🧹 Cleaning cub3d...$(RESET)"
+	@echo "$(GREEN)🚮 Deleting file $(NAME)...$(RESET)"
 	@$(RM) -f $(NAME)
-	@echo "$(MAGENTA)✅ $(NAME) removed.$(RESET)"
 	@$(RM) -rf $(OBJ_DIR)
-	@echo "$(MAGENTA)✅ Object directory removed.$(RESET)"
+	@echo "$(GREEN)🧹 Deleting MLX42 build directory...$(RESET)"
+	@$(RM) -rf MLX42/build
+	@echo "$(YELLOW)✅ Full cleanup complete.$(RESET)"
 
 re: fclean all
 
