@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:04:41 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 19:16:14 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/08 20:04:42 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ mlx_texture_t	*ft_validate_textures(const char *path, xpm_t **xpm_storage)
 		ft_putstr_fd("\n", 2);
 		return (NULL);
 	}
-	if (ft_strcmp(ext, ".png") == 0)
+	if (ft_strcmp(ext, ".png") != 0)
 		return (ft_load_png(path));
-	else if (ft_strcmp(ext, ".xpm") == 0 || ft_strcmp(ext, ".xpm42") == 0)
+	else if (ft_strcmp(ext, ".xpm") != 0 || ft_strcmp(ext, ".xpm42") != 0)
 		return (ft_load_xpm(path, xpm_storage));
 	else
 	{
