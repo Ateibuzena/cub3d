@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanin <chanin@student.42malaga.com>       +#+  +:+       +#+        */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:40:33 by azubieta          #+#    #+#             */
-/*   Updated: 2025/05/28 17:03:38 by chanin           ###   ########.fr       */
+/*   Updated: 2025/07/08 14:16:38 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,24 @@ t_fdnode	*ft_newnode(int fd)
 	return (node);
 }
 
+void	ft_free_all_nodes(t_fdnode **list)
+{
+	t_fdnode	*actual;
+	t_fdnode	*tmp;
+
+	if (!list || !*list)
+		return ;
+	actual = *list;
+	while (actual)
+	{
+		tmp = actual->next;
+		free(actual->buffer);
+		free(actual);
+		actual = tmp;
+	}
+	*list = NULL;
+}
+
 char	*ft_freenode(t_fdnode **list, int fd)
 {
 	t_fdnode	*actual;
@@ -74,6 +92,8 @@ char	*ft_freenode(t_fdnode **list, int fd)
 
 	if (!list || !*list)
 		return (NULL);
+	if (fd == -1)
+		return (ft_free_all_nodes(list), NULL);
 	actual = *list;
 	previous = NULL;
 	while (actual && actual->fd != fd)
@@ -88,8 +108,6 @@ char	*ft_freenode(t_fdnode **list, int fd)
 	else
 		*list = actual->next;
 	free(actual->buffer);
-	actual->buffer = NULL;
 	free(actual);
-	actual = NULL;
 	return (NULL);
 }

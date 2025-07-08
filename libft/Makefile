@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror -I.
 AR = ar rcs
 RM = rm -f
 
-# 📂 Code and object directories
+# 📂 Source and object directories
 SRCDIR = src
 OBJDIR = obj
 
@@ -15,11 +15,14 @@ OBJDIR = obj
 SRCS := $(shell find $(SRCDIR) -type f -name "*.c")
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
+HEADERS = libft.h
+
 # 🎨 Colors
 RED      = \033[0;31m
 GREEN    = \033[0;32m
 YELLOW   = \033[0;33m
 MAGENTA  = \033[0;35m
+PINK = \033[38;2;255;105;180m
 CYAN     = \033[0;36m
 WHITE    = \033[0;37m
 RESET    = \033[0m
@@ -27,41 +30,37 @@ RESET    = \033[0m
 # 🚀 Main compilation
 all: $(NAME)
 
-# 🔨 Create .a archive (libft.a)
+# 🔨 Create the .a archive (libft.a)
 $(NAME): $(OBJDIR) $(OBJS)
-	@echo "$(CYAN)🔗 Creating $(NAME)...$(RESET)"
 	@$(AR) $(NAME) $(OBJS)
-	@echo "$(GREEN)✅ $(NAME) successfully created.$(RESET)"
+	@echo "$(YELLOW)✅ $(NAME) successfully created.$(RESET)"
 
 # 📂 Create object directory
 $(OBJDIR):
-	@echo "$(CYAN)📂 Creating object directories...$(RESET)"
 	@mkdir -p $(OBJDIR)
-	@echo "$(GREEN)✅ Object directories created.$(RESET)"
+	@echo "$(YELLOW)✅ Object directories created.$(RESET)"
 
-# 🏗 Compile `.c` files into `.o`, keeping subdirectory structure
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+# 🏗 Compile .c files to .o, respecting subdirectories
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) | $(OBJDIR)
 	@mkdir -p $(dir $@)
-	@echo "$(YELLOW)🔹 Compiling $< -> $@$(RESET)"
+	@echo "$(CYAN)🔹 Compiling$(MAGENTA) $<$(CYAN) ->$(PINK) $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(GREEN)✅ Compiled: $@$(RESET)"
 
 # 🧹 Clean object files
 clean:
-	@echo "$(RED)🗑️  Deleting object files...$(RESET)"
+	@echo "$(GREEN)🗑️  Removing object directories...$(RESET)"
 	@$(RM) -rf $(OBJDIR)
-	@echo "$(MAGENTA)✅ Object cleanup complete.$(RESET)"
+	@echo "$(YELLOW)✅ Object directories removed.$(RESET)"
 
-# 🧹 Full cleanup (removes objects and .a file)
+# 🧹 Full clean (remove objects and archive)
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
-		echo "$(RED)🚮 Deleting file $(NAME)...$(RESET)"; \
+		echo "$(GREEN)🚮 Removing $(NAME)...$(RESET)"; \
 		$(RM) $(NAME); \
-		echo "$(MAGENTA)✅ $(NAME) removed.$(RESET)"; \
+		echo "$(YELLOW)✅ $(NAME) removed.$(RESET)"; \
 	fi
 
-# 🔄 Full recompilation
+# 🔄 Rebuild everything
 re: fclean all
 
 .PHONY: all clean fclean re
-
