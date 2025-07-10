@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:24:13 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 19:27:52 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:07:04 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,24 @@ void	ft_free_paths(t_data *data)
 	{
 		free(data->paths.west);
 		data->paths.west = NULL;
+	}
+}
+
+void	ft_free_game(t_game *game, t_data *data, char **lines)
+{
+	if (lines)
+		ft_freedouble(lines);
+	if (data)
+		ft_free_paths(data);
+	if (game->img)
+		mlx_delete_image(game->mlx, game->img);
+	ft_free_textures(game);
+	if (game->map.grid)
+		ft_freedouble_array(game->map.grid, game->map.height);
+	if (game->mlx)
+	{
+		if (game->mlx->window)
+			mlx_close_window(game->mlx);
+		mlx_terminate(game->mlx);
 	}
 }

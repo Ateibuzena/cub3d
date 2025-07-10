@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:05:51 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 20:14:40 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/08 20:36:15 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	ft_alloc_grid(t_data *data)
 
 static int	ft_process_player(char c, t_data *data, t_numbers *n, int y)
 {
-	if (n->player_found)
+	if (n->s)
 		return (ft_putstr_fd("[❌] Player: multiplayers\n", 2), 0);
 	data->map.grid[y][n->x] = 0;
 	data->player_x = n->x;
 	data->player_y = y;
 	data->player_dir = c;
-	n->player_found = 1;
+	n->s = 1;
 	return (1);
 }
 
@@ -95,14 +95,14 @@ int	ft_fill_map(char **lines, int start, t_data *data)
 	numbers.w = data->map.width;
 	numbers.h = data->map.height;
 	numbers.y = 0;
-	numbers.player_found = 0;
+	numbers.s = 0;
 	while (numbers.y < numbers.h)
 	{
 		if (!ft_fill_line(lines[start + numbers.y], numbers.y, data, &numbers))
 			return (0);
 		numbers.y++;
 	}
-	if (!numbers.player_found)
+	if (!numbers.s)
 		return (ft_putstr_fd("[❌] Player: not found\n", 2), 0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:04:41 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 20:04:42 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/08 20:14:50 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int	ft_check_surrounded(int **grid, int x, int y, t_numbers size)
 {
 	if (x == 0 || y == 0 || x == size.w - 1 || y == size.h - 1)
-		return (ft_putstr_fd("Error: Map: not closed (border)\n", 2), 0);
+		return (ft_putstr_fd("[❌] Map: not closed (border)\n", 2), 0);
 	if (grid[y - 1][x] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - up)\n", 2), 0);
+		return (ft_putstr_fd("[❌] Map: not closed (hole - up)\n", 2), 0);
 	if (grid[y + 1][x] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - down)\n", 2), 0);
+		return (ft_putstr_fd("[❌] Map: not closed (hole - down)\n", 2), 0);
 	if (grid[y][x - 1] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - left)\n", 2), 0);
+		return (ft_putstr_fd("[❌] Map: not closed (hole - left)\n", 2), 0);
 	if (grid[y][x + 1] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - right)\n", 2), 0);
+		return (ft_putstr_fd("[❌] Map: not closed (hole - right)\n", 2), 0);
 	return (1);
 }
 
@@ -56,9 +56,9 @@ int	ft_validate_player(t_data *data)
 {
 	if (data->player_x <= 0 || data->player_x >= data->map.width - 1
 		|| data->player_y <= 0 || data->player_y >= data->map.height - 1)
-		return (ft_putstr_fd("Error: Player on map border\n", 2), 0);
+		return (ft_putstr_fd("[❌] Player on map border\n", 2), 0);
 	if (data->map.grid[data->player_y][data->player_x] != 0)
-		return (ft_putstr_fd("Error: Player not on walkable tile\n", 2), 0);
+		return (ft_putstr_fd("[❌] Player not on walkable tile\n", 2), 0);
 	return (1);
 }
 
@@ -88,4 +88,35 @@ mlx_texture_t	*ft_validate_textures(const char *path, xpm_t **xpm_storage)
 		ft_putstr_fd(")\n", 2);
 		return (NULL);
 	}
+}
+
+int	ft_validate_map(t_data *data)
+{
+	t_numbers	numbers;
+	int			**grid;
+
+	numbers.w = data->map.width;
+	numbers.h = data->map.height;
+	grid = data->map.grid;
+	numbers.y = 0;
+	while (numbers.y < numbers.h)
+	{
+		numbers.x = 0;
+		while (numbers.x < numbers.w)
+		{
+			if (grid[numbers.y][numbers.x] == 0)
+			{
+				if (numbers.x == 0 || numbers.y == 0 || numbers.x == numbers.w - 1 || numbers.y == numbers.h - 1)
+					return (ft_putstr_fd("[❌] Map: not close (borde)\n", 2), 0);
+				if (grid[numbers.y - 1][numbers.x] == -1 ||
+					grid[numbers.y + 1][numbers.x] == -1 ||
+					grid[numbers.y][numbers.x - 1] == -1 ||
+					grid[numbers.y][numbers.x + 1] == -1)
+					return (ft_putstr_fd("[❌] Map: not close (agujero)\n", 2), 0);
+			}
+			numbers.x++;
+		}
+		numbers.y++;
+	}
+	return (1);
 }
