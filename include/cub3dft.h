@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 14:13:26 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:40:53 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,18 @@ typedef struct s_hit
 	float			y;
 	char			face; // 'N', 'S', 'E', 'W'
 	float			distance;
+	float			wall_dist;
 	float			wall_height;
 	int				wall_type;
 	unsigned int	tile_size;
 }	t_hit;
+
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
 
 typedef struct s_textures
 {
@@ -156,15 +164,12 @@ typedef struct s_game
 /*main.c*/
 int				ft_init_map(char **lines, t_data *data);
 int				ft_init_player(t_game *game, t_data *data);
-int				ft_init_data(t_game *game, char *path);
+int				ft_init_data(t_game *game, char **lines);
 void			ft_init_game(t_game *game, char *file);
 
 /*map.c*/
-int				ft_map_start(char **lines);
-void			ft_map_dimensions(char **lines, int start, t_data *data);
 int				ft_alloc_grid(t_data *data);
 int				ft_fill_map(char **lines, int start, t_data *data);
-int				ft_validate_map(t_data *data);
 
 /*handler.c*/
 void			ft_key_press(t_game *game, int key);
@@ -190,7 +195,8 @@ void			ft_move_player(t_game *game);
 void			ft_init_ray(t_ray *ray, t_player *player, float ray_angle);
 void			ft_init_step(t_ray *ray, t_player *player);
 void			ft_perform_dda(t_ray *ray, t_game *game);
-t_hit			ft_calculate_hit(t_player *player, t_ray *ray, float ray_angle);
+t_hit			ft_calculate_hit(t_hit *hit, t_player *player, t_ray *ray,
+					float angle);
 t_hit			ft_cast_ray(t_game *game, float ray_angle);
 
 /*textures.c*/
@@ -209,14 +215,25 @@ int				ft_parse_textures(char *line, t_data *data);
 int				ft_parse_colors(char *line, t_data *data);
 int				ft_parse_configuration(char **lines, t_data *data);
 
-/*utils.c*/
-int				ft_strlen_nospace(char *str);
+/*free.c*/
+void			ft_free_xpm_textures(t_game *game);
+void			ft_free_png_textures(t_game *game);
 void			ft_free_textures(t_game *game);
 void			ft_free_paths(t_data *data);
+void			ft_free_game(t_game *game, t_data *data, char **lines);
+
+/*utils.c*/
+int				ft_strlen_nospace(char *str);
+int				ft_map_start(char **lines);
+void			ft_map_dimensions(char **lines, int start, t_data *data);
+mlx_texture_t	*ft_load_png(const char *path);
+mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage);
 
 /*check.c*/
+int				ft_check_surrounded(int **grid, int x, int y, t_numbers size);
 int				ft_validate_walls(t_data *data);
 int				ft_validate_player(t_data *data);
+int				ft_validate_map(t_data *data);
 mlx_texture_t	*ft_validate_textures(const char *path, xpm_t **xpm_storage);
 
 #endif
