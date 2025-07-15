@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:24:13 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/09 17:07:04 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 14:37:05 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,48 @@ void	ft_free_xpm_textures(t_game *game)
 	{
 		mlx_delete_xpm42(game->textures.north_xpm);
 		game->textures.north_xpm = NULL;
+		game->textures.north = NULL;
 	}
 	if (game->textures.south_xpm)
 	{
 		mlx_delete_xpm42(game->textures.south_xpm);
 		game->textures.south_xpm = NULL;
+		game->textures.south = NULL;
 	}
 	if (game->textures.east_xpm)
 	{
 		mlx_delete_xpm42(game->textures.east_xpm);
 		game->textures.east_xpm = NULL;
+		game->textures.east = NULL;
 	}
 	if (game->textures.west_xpm)
 	{
 		mlx_delete_xpm42(game->textures.west_xpm);
 		game->textures.west_xpm = NULL;
+		game->textures.west = NULL;
 	}
 }
 
 void	ft_free_png_textures(t_game *game)
 {
-	if (game->textures.north && game->textures.north_xpm == NULL)
+	if (!game->textures.north && !game->textures.south && !game->textures.east && !game->textures.west)
+		return ;
+	if (game->textures.north)
 	{
 		mlx_delete_texture(game->textures.north);
 		game->textures.north = NULL;
 	}
-	if (game->textures.south && game->textures.south_xpm == NULL)
+	if (game->textures.south)
 	{
 		mlx_delete_texture(game->textures.south);
 		game->textures.south = NULL;
 	}
-	if (game->textures.east && game->textures.east_xpm == NULL)
+	if (game->textures.east)
 	{
 		mlx_delete_texture(game->textures.east);
 		game->textures.east = NULL;
 	}
-	if (game->textures.west && game->textures.west_xpm == NULL)
+	if (game->textures.west)
 	{
 		mlx_delete_texture(game->textures.west);
 		game->textures.west = NULL;

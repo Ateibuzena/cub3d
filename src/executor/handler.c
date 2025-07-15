@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:30:54 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 14:31:18 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:35:32 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ void	ft_key_press(t_game *game, int key)
 		game->player.right_rotate = true;
 	else if (key == MLX_KEY_ESCAPE)
 	{
-		mlx_close_window(game->mlx);
-		mlx_delete_image(game->mlx, game->img);
-		ft_free_textures(game);
-		ft_freedouble_array(game->map.grid, game->map.height);
-		mlx_terminate(game->mlx);
+		ft_free_game(game, NULL, NULL);
 		exit(EXIT_SUCCESS);
 	}
 }

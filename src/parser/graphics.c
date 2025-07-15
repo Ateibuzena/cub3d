@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:17:34 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 20:10:38 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:33:40 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_parse_rgb(char *line)
 	{
 		if (parts)
 			ft_freedouble(parts);
-		return (ft_putstr_fd("[❌] Color: not valid\n", 2), -1);
+		return (ft_putstr_fd("Error: Colors: not valid\n", 2), -1);
 	}
 	rgb.r = ft_atoi(parts[0]);
 	rgb.g = ft_atoi(parts[1]);
@@ -33,7 +33,7 @@ int	ft_parse_rgb(char *line)
 		|| rgb.b < 0 || rgb.b > 255)
 	{
 		ft_freedouble(parts);
-		return (ft_putstr_fd("[❌] Color: out of range (0-255)\n", 2), -1);
+		return (ft_putstr_fd("Error: Colors: out of range (0-255)\n", 2), -1);
 	}
 	color = (rgb.r << 24) | (rgb.g << 16) | (rgb.b << 8) | 0xFF;
 	ft_freedouble(parts);
@@ -101,9 +101,9 @@ int	ft_parse_configuration(char **lines, t_data *data)
 	while (lines[i] && ft_is_configuration(lines[i]))
 	{
 		if (!ft_parse_textures(lines[i], data))
-			return (ft_putstr_fd("[❌] Textures: not found\n", 2), 0);
+			return (ft_putstr_fd("Error: Textures: not found\n", 2), 0);
 		if (!ft_parse_colors(lines[i], data))
-			return (ft_putstr_fd("[❌] Colors: not found\n", 2), 0);
+			return (ft_putstr_fd("Error: Colors: not found\n", 2), 0);
 		i++;
 	}
 	return (1);

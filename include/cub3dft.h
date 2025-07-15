@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/10 12:40:53 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 14:30:08 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ typedef struct s_game
 }	t_game;
 
 /*main.c*/
-int				ft_init_map(char **lines, t_data *data);
+int				ft_init_map(char **lines, t_data *data, t_game *game);
 int				ft_init_player(t_game *game, t_data *data);
 int				ft_init_data(t_game *game, char **lines);
 void			ft_init_game(t_game *game, char *file);

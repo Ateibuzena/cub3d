@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:00:45 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 15:01:08 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:32:01 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_render_wall(t_game *game, float ray_angle, int i)
 	wall.texture = ft_get_texture(game, wall.hit.face);
 	wall.hit.tile_size = game->tile_size;
 	if (!wall.texture || !wall.texture->pixels)
-		return (ft_putstr_fd("Error: MLX42 failed to load texture\n", 2));
+		return (ft_putstr_fd("Error: MLX42: failed to load texture\n", 2));
 	wall.height = (wall.hit.tile_size / wall.hit.distance) * (WIDTH / (2
 				* tan(FOV / 2)));
 	wall.start_y = ft_compute_y(wall.height);

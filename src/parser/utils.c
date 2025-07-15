@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:24:13 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 20:13:42 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 14:22:07 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,10 @@ mlx_texture_t	*ft_load_png(const char *path)
 	texture = mlx_load_png(path);
 	if (!texture)
 	{
-		ft_putstr_fd("[❌] Failed to load PNG texture: ", 2);
+		ft_putstr_fd("Error: Texture: failed to load PNG: ", 2);
 		ft_putstr_fd((char *)path, 2);
 		ft_putstr_fd("\n", 2);
-	}
-	else
-	{
-		ft_putstr_fd("[✅] PNG texture loaded successfully: ", 1);
-		ft_putstr_fd((char *)path, 1);
-		ft_putstr_fd("\n", 1);
+		return (NULL);
 	}
 	return (texture);
 }
@@ -94,14 +89,11 @@ mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage)
 	xpm = mlx_load_xpm42(path);
 	if (!xpm)
 	{
-		ft_putstr_fd("[❌] Failed to load XPM texture: ", 2);
+		ft_putstr_fd("Error: Textures: failed to load XPM: ", 2);
 		ft_putstr_fd((char *)path, 2);
 		ft_putstr_fd("\n", 2);
 		return (NULL);
 	}
 	*xpm_storage = xpm;
-	ft_putstr_fd("[✅] XPM texture loaded successfully: ", 1);
-	ft_putstr_fd((char *)path, 1);
-	ft_putstr_fd("\n", 1);
 	return (&xpm->texture);
 }
