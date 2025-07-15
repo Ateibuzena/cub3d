@@ -6,26 +6,11 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:04:41 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/10 12:46:01 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:40:18 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3dft.h"
-
-int	ft_check_surrounded(int **grid, int x, int y, t_numbers size)
-{
-	if (x == 0 || y == 0 || x == size.w - 1 || y == size.h - 1)
-		return (ft_putstr_fd("Error: Map: not closed (border)\n", 2), 0);
-	if (grid[y - 1][x] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - up)\n", 2), 0);
-	if (grid[y + 1][x] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - down)\n", 2), 0);
-	if (grid[y][x - 1] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - left)\n", 2), 0);
-	if (grid[y][x + 1] == -1)
-		return (ft_putstr_fd("Error: Map: not closed (hole - right)\n", 2), 0);
-	return (1);
-}
 
 int	ft_validate_walls(t_data *data)
 {

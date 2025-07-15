@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:20:28 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/10 12:34:22 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:40:55 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,40 @@ char	**ft_read_file(char *path)
 	lines = ft_split(content, '\n');
 	free(content);
 	if (!lines)
-		return (ft_putstr_fd("Error: File: failed to split content\n", 2), NULL);
+	{
+		ft_putstr_fd("Error: File: failed to split content\n", 2);
+		return (NULL);
+	}
 	return (lines);
+}
+
+mlx_texture_t	*ft_load_png(const char *path)
+{
+	mlx_texture_t	*texture;
+
+	texture = mlx_load_png(path);
+	if (!texture)
+	{
+		ft_putstr_fd("Error: Texture: failed to load PNG: ", 2);
+		ft_putstr_fd((char *)path, 2);
+		ft_putstr_fd("\n", 2);
+		return (NULL);
+	}
+	return (texture);
+}
+
+mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage)
+{
+	xpm_t	*xpm;
+
+	xpm = mlx_load_xpm42(path);
+	if (!xpm)
+	{
+		ft_putstr_fd("Error: Textures: failed to load XPM: ", 2);
+		ft_putstr_fd((char *)path, 2);
+		ft_putstr_fd("\n", 2);
+		return (NULL);
+	}
+	*xpm_storage = xpm;
+	return (&xpm->texture);
 }

@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:24:13 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 14:37:05 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:42:09 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	ft_free_xpm_textures(t_game *game)
 
 void	ft_free_png_textures(t_game *game)
 {
-	if (!game->textures.north && !game->textures.south && !game->textures.east && !game->textures.west)
+	if (!game->textures.north
+		&& !game->textures.south
+		&& !game->textures.east
+		&& !game->textures.west)
 		return ;
 	if (game->textures.north)
 	{

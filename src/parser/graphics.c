@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:17:34 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/10 12:33:40 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:57:43 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ int	ft_parse_textures(char *line, t_data *data)
 	return (1);
 }
 
-int	ft_parse_colors(char *line, t_data *data)
+int	ft_parse_colors(char *line, t_data *data, t_game *game)
 {
+	game->floor = -1;
+	game->ceiling = -1;
 	if (ft_strncmp(line, "F ", 2) == 0)
 	{
 		data->floor = ft_parse_rgb(line + 2);
@@ -90,10 +92,12 @@ int	ft_parse_colors(char *line, t_data *data)
 		if (!data->ceiling)
 			return (0);
 	}
+	game->floor = data->floor;
+	game->ceiling = data->ceiling;
 	return (1);
 }
 
-int	ft_parse_configuration(char **lines, t_data *data)
+int	ft_parse_configuration(char **lines, t_data *data, t_game *game)
 {
 	int	i;
 
@@ -102,7 +106,7 @@ int	ft_parse_configuration(char **lines, t_data *data)
 	{
 		if (!ft_parse_textures(lines[i], data))
 			return (ft_putstr_fd("Error: Textures: not found\n", 2), 0);
-		if (!ft_parse_colors(lines[i], data))
+		if (!ft_parse_colors(lines[i], data, game))
 			return (ft_putstr_fd("Error: Colors: not found\n", 2), 0);
 		i++;
 	}

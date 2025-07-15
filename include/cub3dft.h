@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 14:30:08 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:56:45 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,13 +207,15 @@ uint32_t		ft_get_color(t_wall *wall, int tex_y);
 
 /*read.c*/
 char			**ft_read_file(char *path);
+mlx_texture_t	*ft_load_png(const char *path);
+mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage);
 
 /*graphics.c*/
 int				ft_parse_rgb(char *line);
 int				ft_is_configuration(char *line);
 int				ft_parse_textures(char *line, t_data *data);
-int				ft_parse_colors(char *line, t_data *data);
-int				ft_parse_configuration(char **lines, t_data *data);
+int				ft_parse_colors(char *line, t_data *data, t_game *game);
+int				ft_parse_configuration(char **lines, t_data *data, t_game *game);
 
 /*free.c*/
 void			ft_free_xpm_textures(t_game *game);
@@ -226,11 +228,9 @@ void			ft_free_game(t_game *game, t_data *data, char **lines);
 int				ft_strlen_nospace(char *str);
 int				ft_map_start(char **lines);
 void			ft_map_dimensions(char **lines, int start, t_data *data);
-mlx_texture_t	*ft_load_png(const char *path);
-mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage);
+int				ft_check_surrounded(int **grid, int x, int y, t_numbers size);
 
 /*check.c*/
-int				ft_check_surrounded(int **grid, int x, int y, t_numbers size);
 int				ft_validate_walls(t_data *data);
 int				ft_validate_player(t_data *data);
 int				ft_validate_map(t_data *data);

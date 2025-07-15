@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:24:13 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 14:22:07 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:40:41 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,17 @@ void	ft_map_dimensions(char **lines, int start, t_data *data)
 	data->map.width = max_width;
 }
 
-mlx_texture_t	*ft_load_png(const char *path)
+int	ft_check_surrounded(int **grid, int x, int y, t_numbers size)
 {
-	mlx_texture_t	*texture;
-
-	texture = mlx_load_png(path);
-	if (!texture)
-	{
-		ft_putstr_fd("Error: Texture: failed to load PNG: ", 2);
-		ft_putstr_fd((char *)path, 2);
-		ft_putstr_fd("\n", 2);
-		return (NULL);
-	}
-	return (texture);
-}
-
-mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage)
-{
-	xpm_t	*xpm;
-
-	xpm = mlx_load_xpm42(path);
-	if (!xpm)
-	{
-		ft_putstr_fd("Error: Textures: failed to load XPM: ", 2);
-		ft_putstr_fd((char *)path, 2);
-		ft_putstr_fd("\n", 2);
-		return (NULL);
-	}
-	*xpm_storage = xpm;
-	return (&xpm->texture);
+	if (x == 0 || y == 0 || x == size.w - 1 || y == size.h - 1)
+		return (ft_putstr_fd("Error: Map: not closed (border)\n", 2), 0);
+	if (grid[y - 1][x] == -1)
+		return (ft_putstr_fd("Error: Map: not closed (hole - up)\n", 2), 0);
+	if (grid[y + 1][x] == -1)
+		return (ft_putstr_fd("Error: Map: not closed (hole - down)\n", 2), 0);
+	if (grid[y][x - 1] == -1)
+		return (ft_putstr_fd("Error: Map: not closed (hole - left)\n", 2), 0);
+	if (grid[y][x + 1] == -1)
+		return (ft_putstr_fd("Error: Map: not closed (hole - right)\n", 2), 0);
+	return (1);
 }

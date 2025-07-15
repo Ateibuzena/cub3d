@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:16 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 14:31:23 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:56:57 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_init_data(t_game *game, char **lines)
 
 	if (!lines)
 		return (ft_putstr_fd("Error: File: not readed\n", 2), 0);
-	if (!ft_parse_configuration(lines, &data))
+	if (!ft_parse_configuration(lines, &data, game))
 	{
 		ft_putstr_fd("Error: MLX42 failed to parse configuration section\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
@@ -91,14 +91,11 @@ int	ft_init_data(t_game *game, char **lines)
 		ft_putstr_fd("Error: MLX42 failed to parse map section\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
 	}
-	
 	if (!ft_init_player(game, &data))
 	{
 		ft_putstr_fd("Error: MLX42 failed to create player\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
 	}
-	game->floor = data.floor;
-	game->ceiling = data.ceiling;
 	return (ft_freedouble(lines), ft_free_paths(&data), 1);
 }
 
