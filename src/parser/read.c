@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:20:28 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 15:40:55 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:45:54 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ mlx_texture_t	*ft_load_png(const char *path)
 {
 	mlx_texture_t	*texture;
 
+	if (!path)
+		return (NULL);
 	texture = mlx_load_png(path);
 	if (!texture)
 	{
@@ -82,6 +84,8 @@ mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage)
 {
 	xpm_t	*xpm;
 
+	if (!path)
+		return (NULL);
 	xpm = mlx_load_xpm42(path);
 	if (!xpm)
 	{

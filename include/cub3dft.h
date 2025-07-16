@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 15:56:45 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:18:06 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,11 +211,12 @@ mlx_texture_t	*ft_load_png(const char *path);
 mlx_texture_t	*ft_load_xpm(const char *path, xpm_t **xpm_storage);
 
 /*graphics.c*/
-int				ft_parse_rgb(char *line);
+int				ft_parse_rgb(char *line, unsigned int *color);
 int				ft_is_configuration(char *line);
 int				ft_parse_textures(char *line, t_data *data);
 int				ft_parse_colors(char *line, t_data *data, t_game *game);
-int				ft_parse_configuration(char **lines, t_data *data, t_game *game);
+int				ft_parse_configuration(char **lines,
+					t_data *data, t_game *game);
 
 /*free.c*/
 void			ft_free_xpm_textures(t_game *game);

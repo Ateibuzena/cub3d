@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:04:41 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 15:40:18 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:24:11 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ mlx_texture_t	*ft_validate_textures(const char *path, xpm_t **xpm_storage)
 	ext = ft_strrchr(path, '.');
 	if (!ext)
 	{
-		ft_putstr_fd("Error: Texture: path has no extension: ", 2);
+		ft_putstr_fd("Error: Texture: path hasn't extension: ", 2);
 		ft_putstr_fd((char *)path, 2);
 		ft_putstr_fd("\n", 2);
 		return (NULL);

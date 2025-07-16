@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azubieta <azubieta@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:23:31 by azubieta          #+#    #+#             */
-/*   Updated: 2025/03/31 19:02:50 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:54:28 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 char	*ft_strrchr(const char *str, int c)
 {
-	int		len;
-	char	*ptr;
+	unsigned int		len;
+	char				*ptr;
 
 	ptr = 0;
+	if (!str)
+		return (NULL);
 	len = ft_strlen(str);
 	c = (unsigned char)c;
-	while (len >= 0)
+	while (len)
 	{
 		if (str[len] == c)
 		{

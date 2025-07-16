@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:16 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/15 15:56:57 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:25:38 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_init_map(char **lines, t_data *data, t_game *game)
 {
 	int	start;
 
-	game->map.grid = 0;
 	start = ft_map_start(lines);
 	if (start == -1)
 		return (ft_putstr_fd("Error: Map: not found\n", 2), 0);
@@ -76,26 +75,15 @@ int	ft_init_data(t_game *game, char **lines)
 
 	if (!lines)
 		return (ft_putstr_fd("Error: File: not readed\n", 2), 0);
+	ft_memset(&data, 0, sizeof(t_data));
 	if (!ft_parse_configuration(lines, &data, game))
-	{
-		ft_putstr_fd("Error: MLX42 failed to parse configuration section\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
-	}
 	if (!ft_load_textures(game, data))
-	{
-		ft_putstr_fd("Error: MLX42 failed to load texture\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
-	}
 	if (!ft_init_map(lines, &data, game))
-	{
-		ft_putstr_fd("Error: MLX42 failed to parse map section\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
-	}
 	if (!ft_init_player(game, &data))
-	{
-		ft_putstr_fd("Error: MLX42 failed to create player\n", 2);
 		return (ft_free_game(game, &data, lines), 0);
-	}
 	return (ft_freedouble(lines), ft_free_paths(&data), 1);
 }
 
@@ -130,6 +118,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
+	ft_memset(&game, 0, sizeof(t_game));
 	ft_init_game(&game, argv[1]);
 	mlx_key_hook(game.mlx, (void *)ft_handle_key, &game);
 	mlx_loop_hook(game.mlx, (void *)ft_handle_loop, &game);
