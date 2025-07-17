@@ -1,9 +1,12 @@
-NO /home/azubieta/Desktop/cub3d/textures/1400x1400/triangle/bermuda_traingle.png
-SO /home/azubieta/Desktop/cub3d/textures/1400x1400/triangle/bermuda_traingle.png
-WE /home/azubieta/Desktop/cub3d/textures/1400x1400/triangle/bermuda_traingle.png
-EA /home/azubieta/Desktop/cub3d/textures/1400x1400/triangle/bermuda_traingle.png
+
 F 0,0,255
 C 135,206,250
+
+NO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/triangle/bermuda_triangle.png
+SO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/triangle/bermuda_triangle.png
+WE /home/azubieta/Desktop/cub3d_github/textures/1400x1400/triangle/bermuda_triangle.png
+EA /home/azubieta/Desktop/cub3d_github/textures/1400x1400/triangle/bermuda_triangle.png
+
 1111111111111111111111111
 1E00000000111100000000001
 1111111001010010111111101
