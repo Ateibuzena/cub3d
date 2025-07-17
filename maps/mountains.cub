@@ -1,7 +1,7 @@
-NO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/mountain/flat_mountains.png
-SO /home/azubieta/Desktop/cub3d_github/textures/1400x1400/mountain/flat_mountains.png
-WE /home/azubieta/Desktop/cub3d_github/textures/1400x1400/mountain/flat_mountains.png
-EA /home/azubieta/Desktop/cub3d_github/textures/1400x1400/mountain/flat_mountains.png
+NO textures/1400x1400/mountain/flat_mountains.png
+SO textures/1400x1400/mountain/flat_mountains.png
+WE textures/1400x1400/mountain/flat_mountains.png
+EA textures/1400x1400/mountain/flat_mountains.png
 F 220,100,0  //0xFF0000FF
 C 225,30,0  //0xFFA500FF
       11111111111111111111
