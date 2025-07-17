@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:54:56 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/16 16:18:06 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:48:18 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,17 @@ typedef struct s_map
 	int		**grid;
 	int		width;
 	int		height;
+	bool	show_map;
 }	t_map;
+
+typedef struct s_minimap
+{
+	int		tile_size;
+	int		max_width;
+	int		max_height;
+	int		offset_x;
+	int		offset_y;
+}	t_minimap;
 
 typedef struct s_player
 {
@@ -153,6 +163,7 @@ typedef struct s_game
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_map			map;
+	t_minimap		minimap;
 	t_player		player;
 	t_textures		textures;
 	t_wall			wall;
@@ -161,12 +172,12 @@ typedef struct s_game
 	unsigned int	tile_size;
 }	t_game;
 
-/*main.c*/
+/*init.c*/
+void			ft_init_minimap(t_game *game);
 int				ft_init_map(char **lines, t_data *data, t_game *game);
 int				ft_init_player(t_game *game, t_data *data);
 int				ft_init_data(t_game *game, char **lines);
 void			ft_init_game(t_game *game, char *file);
-
 /*map.c*/
 int				ft_alloc_grid(t_data *data);
 int				ft_fill_map(char **lines, int start, t_data *data);
@@ -178,9 +189,15 @@ void			ft_handle_key(mlx_key_data_t keydata, void *param);
 int				ft_handle_loop(t_game *game);
 
 /*draw.c*/
-void			ft_draw_point(t_numbers p, int size, int color, t_game *game);
+void			ft_draw_box(t_game *game, t_numbers p, int size, int color);
 void			ft_draw_wall(t_game *game, int i, t_wall *wall);
 void			ft_clear_image(t_game *game);
+void			ft_draw_square(t_game *game, t_numbers p, int size, int color);
+void			ft_draw_map(t_game *game);
+
+/*color.c*/
+unsigned int	ft_desaturate(unsigned int color, float factor);
+unsigned int	ft_invert_color(unsigned int color);
 
 /*render.c*/
 void			ft_render_wall(t_game *game, float ray_angle, int i);

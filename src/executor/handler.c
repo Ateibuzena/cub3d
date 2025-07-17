@@ -6,7 +6,7 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:30:54 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/10 12:35:32 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:52:07 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_key_press(t_game *game, int key)
 		game->player.left_rotate = true;
 	else if (key == MLX_KEY_RIGHT)
 		game->player.right_rotate = true;
+	else if (key == MLX_KEY_M)
+		game->map.show_map = !game->map.show_map;
 	else if (key == MLX_KEY_ESCAPE)
 	{
 		ft_free_game(game, NULL, NULL);
@@ -76,5 +78,7 @@ int	ft_handle_loop(t_game *game)
 		ft_render_wall(game, ray_angle, i);
 		i++;
 	}
+	if (game->map.show_map)
+		ft_draw_map(game);
 	return (0);
 }

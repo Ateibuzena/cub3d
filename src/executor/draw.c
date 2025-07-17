@@ -6,13 +6,13 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:22:35 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/08 14:29:36 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:51:45 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3dft.h"
 
-void	ft_draw_point(t_numbers p, int size, int color, t_game *game)
+void	ft_draw_box(t_game *game, t_numbers p, int size, int color)
 {
 	int	i;
 
@@ -67,4 +67,51 @@ void	ft_clear_image(t_game *game)
 		}
 		y++;
 	}
+}
+
+void	ft_draw_square(t_game *game, t_numbers p, int size, int color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			mlx_put_pixel(game->img, p.x + i, p.y + j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_draw_map(t_game *game)
+{
+	t_numbers		p;
+	unsigned int	wall_color;
+	unsigned int	player_color;
+
+	player_color = ft_invert_color(ft_desaturate(game->floor, 0.1f));
+	wall_color = ft_invert_color(game->floor);
+	p.i = 0;
+	while (p.i < game->map.height)
+	{
+		p.j = 0;
+		while (p.j < game->map.width)
+		{
+			p.x = game->minimap.offset_x + p.j * game->minimap.tile_size;
+			p.y = game->minimap.offset_y + p.i * game->minimap.tile_size;
+			if (game->map.grid[p.i][p.j] == 1)
+				ft_draw_square(game, p, game->minimap.tile_size, wall_color);
+			p.j++;
+		}
+		p.i++;
+	}
+	p.x = game->minimap.offset_x + (int)(game->player.x / game->tile_size)
+		* game->minimap.tile_size;
+	p.y = game->minimap.offset_y + (int)(game->player.y / game->tile_size)
+		* game->minimap.tile_size;
+	ft_draw_square(game, p, game->minimap.tile_size, player_color);
 }
