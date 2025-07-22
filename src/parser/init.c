@@ -6,21 +6,35 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:57:21 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/17 12:12:58 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/22 23:24:45 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3dft.h"
 
-void	ft_init_minimap(t_game *game)
+int	ft_init_minimap(t_game *game)
 {
+	int	tmp_tile_size;
+
+	if (!game)
+		return (0);
+	if (game->map.width <= 0 || game->map.height <= 0
+		|| WIDTH <= 0 || HEIGHT >= 0)
+		return (0);
 	game->minimap.max_width = WIDTH / 4;
 	game->minimap.max_height = HEIGHT / 4;
 	game->minimap.tile_size = game->minimap.max_width / game->map.width;
-	if (game->minimap.tile_size > game->minimap.max_height / game->map.height)
-		game->minimap.tile_size = game->minimap.max_height / game->map.height;
+	if (game->map.height != 0)
+	{
+		tmp_tile_size = game->minimap.max_height / game->map.height;
+		if (game->minimap.tile_size > tmp_tile_size)
+			game->minimap.tile_size = tmp_tile_size;
+	}
+	if (game->minimap.tile_size <= 0)
+		game->minimap.tile_size = 1;
 	game->minimap.offset_x = 20;
 	game->minimap.offset_y = game->minimap.offset_x * 2;
+	return (1);
 }
 
 int	ft_init_map(char **lines, t_data *data, t_game *game)
@@ -80,13 +94,18 @@ int	ft_init_player(t_game *game, t_data *data)
 	return (1);
 }
 
-int	ft_init_data(t_game *game, char **lines)
+int	ft_init_data(t_game *game, char *file)
 {
 	t_data	data;
+	char	**lines;
 
-	if (!lines)
-		return (ft_putstr_fd("Error: File: not readed\n", 2), 0);
 	ft_memset(&data, 0, sizeof(t_data));
+	lines = ft_read_file(file);
+	if (!lines)
+	{
+		ft_putstr_fd("Error: File: not readed\n", 2);
+		return (ft_free_game(game, &data, lines), 0);
+	}
 	if (!ft_parse_configuration(lines, &data, game))
 		return (ft_free_game(game, &data, lines), 0);
 	if (!ft_load_textures(game, data))
@@ -95,7 +114,8 @@ int	ft_init_data(t_game *game, char **lines)
 		return (ft_free_game(game, &data, lines), 0);
 	if (!ft_init_player(game, &data))
 		return (ft_free_game(game, &data, lines), 0);
-	ft_init_minimap(game);
+	if (!ft_init_minimap(game))
+		return (ft_free_game(game, &data, lines), 0);
 	return (ft_freedouble(lines), ft_free_paths(&data), 1);
 }
 
@@ -120,6 +140,6 @@ void	ft_init_game(t_game *game, char *file)
 		ft_free_game(game, NULL, NULL);
 		exit(EXIT_FAILURE);
 	}
-	if (!ft_init_data(game, ft_read_file(file)))
+	if (!ft_init_data(game, file))
 		exit(EXIT_FAILURE);
 }
