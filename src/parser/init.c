@@ -6,35 +6,21 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:57:21 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/22 23:24:45 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/24 00:15:53 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3dft.h"
 
-int	ft_init_minimap(t_game *game)
+void	ft_init_minimap(t_game *game)
 {
-	int	tmp_tile_size;
-
-	if (!game)
-		return (0);
-	if (game->map.width <= 0 || game->map.height <= 0
-		|| WIDTH <= 0 || HEIGHT >= 0)
-		return (0);
 	game->minimap.max_width = WIDTH / 4;
 	game->minimap.max_height = HEIGHT / 4;
 	game->minimap.tile_size = game->minimap.max_width / game->map.width;
-	if (game->map.height != 0)
-	{
-		tmp_tile_size = game->minimap.max_height / game->map.height;
-		if (game->minimap.tile_size > tmp_tile_size)
-			game->minimap.tile_size = tmp_tile_size;
-	}
-	if (game->minimap.tile_size <= 0)
-		game->minimap.tile_size = 1;
+	if (game->minimap.tile_size > game->minimap.max_height / game->map.height)
+		game->minimap.tile_size = game->minimap.max_height / game->map.height;
 	game->minimap.offset_x = 20;
 	game->minimap.offset_y = game->minimap.offset_x * 2;
-	return (1);
 }
 
 int	ft_init_map(char **lines, t_data *data, t_game *game)
@@ -114,8 +100,7 @@ int	ft_init_data(t_game *game, char *file)
 		return (ft_free_game(game, &data, lines), 0);
 	if (!ft_init_player(game, &data))
 		return (ft_free_game(game, &data, lines), 0);
-	if (!ft_init_minimap(game))
-		return (ft_free_game(game, &data, lines), 0);
+	ft_init_minimap(game);
 	return (ft_freedouble(lines), ft_free_paths(&data), 1);
 }
 
