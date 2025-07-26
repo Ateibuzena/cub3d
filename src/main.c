@@ -6,21 +6,39 @@
 /*   By: azubieta <azubieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:16 by azubieta          #+#    #+#             */
-/*   Updated: 2025/07/22 23:09:52 by azubieta         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:42:22 by azubieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3dft.h"
 
-int	ft_check_args(char **argv)
+static int	ft_check_extension(const char *path)
+{
+	size_t	len;
+
+	if (!path)
+		return (0);
+	len = ft_strlen(path);
+	if (len < 4)
+		return (0);
+	if (ft_strcmp(path + len - 4, ".cub"))
+		return (1);
+	return (0);
+}
+
+static int	ft_check_args(char **argv)
 {
 	if (ft_atoi(argv[1]) != 0)
 	{
 		fprintf(stderr, "Error\n");
 		return (0);
 	}
-	else
-		return (1);
+	if (!ft_check_extension(argv[1]))
+	{
+		fprintf(stderr, "Error\n");
+		return (0);
+	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
