@@ -1,7 +1,7 @@
-NO textures/1400x1400/fractal_loop.png
-SO textures/1400x1400/fractal_loop.png
-WE textures/1400x1400/fractal_loop.png
-EA textures/1400x1400/fractal_loop.png
+NO textures/1400x1400/fractal_wall.png
+SO textures/1400x1400/fractal_wall.png
+WE textures/1400x1400/fractal_wall.png
+EA textures/1400x1400/fractal_wall.png
 F 0,0,0  //0xFF0000FF
 C 0,0,0  //0xFFA500FF
 
