@@ -4,7 +4,7 @@
 
 ## 📷 Demo
 
-![Demo animated](cub3D_optimized.gif)
+![Demo animated](Demo_cub3D.gif)
 
 ## 🎯 Goal
 
