@@ -2,13 +2,13 @@
 
 > A 42 School project — Raycasting engine based on Wolfenstein 3D.
 
+## 📷 Demo
+
+![Demo animated](cub3D_optimized.gif)
+
 ## 🎯 Goal
 
 The goal of this project is to build a simple 3D game using raycasting in C and the MiniLibX graphics library. It renders a first-person view of a 2D map, handles player movement, and displays textured walls in a pseudo-3D perspective.
-
-## 📷 Demo
-
-*(You can add a screenshot here later when the engine works!)*
 
 ## 🧱 Features
 
@@ -42,7 +42,6 @@ Example:
   1000N1
   111111
 ```
-
 
 ## 🛠️ Build Instructions
 
