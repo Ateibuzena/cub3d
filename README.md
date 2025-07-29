@@ -6,7 +6,7 @@
 
 The goal of this project is to build a simple 3D game using raycasting in C and the MiniLibX graphics library. It renders a first-person view of a 2D map, handles player movement, and displays textured walls in a pseudo-3D perspective.
 
-## 📷 Screenshot
+## 📷 Demo
 
 *(You can add a screenshot here later when the engine works!)*
 
@@ -78,13 +78,3 @@ To run the program:
 - Lodev Raycasting tutorial
 
 - Wolfenstein 3D
-
-## 🛠️ Build Instructions
-
-Let me know if you want me to generate the base files too, like:
-
-- `Makefile` (compatible with 42 Norminette)
-- `main.c` with a working window from MiniLibX
-- `cub3d.h` header ready to grow
-
-Would you like that as the next step?
