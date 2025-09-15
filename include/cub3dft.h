@@ -213,7 +213,7 @@ void			ft_move_player(t_game *game);
 void			ft_init_ray(t_ray *ray, t_player *player, float ray_angle);
 void			ft_init_step(t_ray *ray, t_player *player);
 void			ft_perform_dda(t_ray *ray, t_game *game);
-t_hit			ft_calculate_hit(t_hit *hit, t_player *player, t_ray *ray,
+t_hit			ft_calculate_hit(t_hit hit, t_player *player, t_ray *ray,
 					float angle);
 t_hit			ft_cast_ray(t_game *game, float ray_angle);
 

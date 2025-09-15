@@ -38,6 +38,7 @@ static int	ft_check_args(char **argv)
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	
 
 	if (argc != 2 || !ft_check_args(argv))
 		return (ft_putstr_fd("Error\n", 2), 1);

@@ -76,41 +76,43 @@ void	ft_perform_dda(t_ray *ray, t_game *game)
 	}
 }
 
-t_hit	ft_calculate_hit(t_hit *hit, t_player *player, t_ray *ray, float angle)
+t_hit	ft_calculate_hit(t_hit hit, t_player *player, t_ray *ray, float angle)
 {
 	if (ray->side == 0)
 	{
-		hit->wall_dist = ((ray->map_x * player->tile_size - player->x) + (1
+		hit.wall_dist = ((ray->map_x * player->tile_size - player->x) + (1
 					- ray->step_x) * player->tile_size / 2.0) / ray->ray_dir_x;
 		if (ray->ray_dir_x > 0)
-			hit->face = 'W';
+			hit.face = 'W';
 		else
-			hit->face = 'E';
+			hit.face = 'E';
 	}
 	else
 	{
-		hit->wall_dist = ((ray->map_y * player->tile_size - player->y) + (1
+		hit.wall_dist = ((ray->map_y * player->tile_size - player->y) + (1
 					- ray->step_y) * player->tile_size / 2.0) / ray->ray_dir_y;
 		if (ray->ray_dir_y > 0)
-			hit->face = 'N';
+			hit.face = 'N';
 		else
-			hit->face = 'S';
+			hit.face = 'S';
 	}
-	hit->x = player->x + hit->wall_dist * ray->ray_dir_x;
-	hit->y = player->y + hit->wall_dist * ray->ray_dir_y;
-	hit->distance = hit->wall_dist * cos(angle - player->angle);
-	if (hit->distance < 0.1)
-		hit->distance = 0.1;
-	return (*hit);
+	hit.x = player->x + hit.wall_dist * ray->ray_dir_x;
+	hit.y = player->y + hit.wall_dist * ray->ray_dir_y;
+	hit.distance = hit.wall_dist * cos(angle - player->angle);
+	if (hit.distance < 0.1)
+		hit.distance = 0.1;
+	return (hit);
 }
 
 t_hit	ft_cast_ray(t_game *game, float ray_angle)
 {
 	t_ray	ray;
-	t_hit	hit;
+	t_hit	hit = {0};
 
 	ft_init_ray(&ray, &game->player, ray_angle);
 	ft_init_step(&ray, &game->player);
 	ft_perform_dda(&ray, game);
-	return (ft_calculate_hit(&hit, &game->player, &ray, ray_angle));
+
+	hit = ft_calculate_hit(hit, &game->player, &ray, ray_angle);
+	return (hit);
 }

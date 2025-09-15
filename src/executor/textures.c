@@ -37,7 +37,22 @@ int	ft_load_textures(t_game *game, t_data data)
 	return (1);
 }
 
-mlx_texture_t	*ft_get_texture(t_game *game, char face)
+mlx_texture_t *ft_get_texture(t_game *game, char face)
+{
+    int r = rand() % 100;
+
+    if (face == 'N')
+        return (r < 80 ? game->textures.north : game->textures.south);
+    if (face == 'S')
+        return (r < 80 ? game->textures.south : game->textures.north);
+    if (face == 'E')
+        return (r < 80 ? game->textures.east : game->textures.west);
+    if (face == 'W')
+        return (r < 80 ? game->textures.west : game->textures.east);
+    return NULL;
+}
+
+/*mlx_texture_t	*ft_get_texture(t_game *game, char face)
 {
 	if (face == 'N')
 		return (game->textures.north);
@@ -49,6 +64,77 @@ mlx_texture_t	*ft_get_texture(t_game *game, char face)
 		return (game->textures.west);
 	return (NULL);
 }
+
+mlx_texture_t	*ft_get_texture(t_game *game, char face)
+{
+	static int	turn = 0;
+
+	if (face == 'N')
+	{
+		if (turn % 2 == 0)
+		{
+			turn++;
+			return (game->textures.south);
+		}
+		turn++;
+		return (game->textures.north);
+	}
+	if (face == 'S')
+	{
+		if (turn % 2 == 0)
+		{
+			turn++;
+			return (game->textures.north);
+		}
+		turn++;
+		return (game->textures.south);
+	}
+	if (face == 'E')
+	{
+		if (turn % 2 == 0)
+		{
+			turn++;
+			return (game->textures.west);
+		}
+		turn++;
+		return (game->textures.east);
+	}
+	if (face == 'W')
+	{
+		if (turn % 2 == 0)
+		{
+			turn++;
+			return (game->textures.east);
+		}
+		turn++;
+		return (game->textures.west);
+	}
+	return (NULL);
+}
+
+mlx_texture_t	*ft_get_texture(t_game *game, char face)
+{
+	static int turn[4] = {0, 0, 0, 0}; 
+	// 0 = N, 1 = S, 2 = E, 3 = W
+
+	if (face == 'N')
+	{
+		return (turn[0]++ % 2 == 0 ? game->textures.north : game->textures.south);
+	}
+	if (face == 'S')
+	{
+		return (turn[1]++ % 2 == 0 ? game->textures.south : game->textures.north);
+	}
+	if (face == 'E')
+	{
+		return (turn[2]++ % 2 == 0 ? game->textures.east : game->textures.west);
+	}
+	if (face == 'W')
+	{
+		return (turn[3]++ % 2 == 0 ? game->textures.west : game->textures.east);
+	}
+	return (NULL);
+}*/
 
 void	ft_init_mapping(t_wall *wall)
 {
